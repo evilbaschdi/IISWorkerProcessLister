@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
+using IISWorkerProcessLister.Internal;
 
-namespace IISWorkerProcessLister.Internal
+namespace IISWorkerProcessLister.Core
 {
     /// <summary>
     /// Class implementing support for "minimize to tray" functionality.
@@ -67,7 +68,8 @@ namespace IISWorkerProcessLister.Internal
                 if (minimized && !_balloonShown)
                 {
                     // If this is the first time minimizing to the tray, show the user what happened
-                    _notifyIcon.ShowBalloonTip(1000, null, MainWindow.WorkerProcessShortInfo, ToolTipIcon.None);
+                    var workerProcesses = new WorkerProcesses();
+                    _notifyIcon.ShowBalloonTip(1000, null, workerProcesses.WorkerProcessShortInfo, ToolTipIcon.None);
                     _balloonShown = true;
                 }
             }
@@ -84,4 +86,6 @@ namespace IISWorkerProcessLister.Internal
             }
         }
     }
+
+
 }

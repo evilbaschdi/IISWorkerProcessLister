@@ -96,10 +96,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Internal\MinimizeToTray.cs" />
+    <Compile Include="Core\MinimizeToTray.cs" />
+    <Compile Include="Internal\WorkerProcess.cs" />
     <Compile Include="Style\AppTreeItem.cs" />
     <Compile Include="Style\CloseTabItemAction.cs" />
     <Compile Include="Internal\WorkerProcessItem.cs" />
+    <Compile Include="Core\WindowSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
