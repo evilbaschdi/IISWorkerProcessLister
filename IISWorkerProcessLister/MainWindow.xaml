@@ -1,10 +1,11 @@
-﻿<Controls:MetroWindow x:Class="IISWorkerProcessLister.MainWindow"
+﻿<controls:MetroWindow x:Class="IISWorkerProcessLister.MainWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:System="clr-namespace:System;assembly=mscorlib"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       ResizeMode="CanMinimize"
-                      Title="IIS Worker Processes" Height="350" Width="1024" Icon="server.ico">
+                      Title="IIS Worker Processes" Height="350" Width="1024" Icon="server.ico"
+                      WindowStartupLocation="CenterScreen"
+                      Style="{DynamicResource VSWindowStyleKey}">
     <Grid>
         <DataGrid Name="WorkerProcessesDataGrid" Margin="0" AutoGenerateColumns="False"
                   GridLinesVisibility="Horizontal" CanUserAddRows="False" CanUserDeleteRows="False"
@@ -34,4 +35,4 @@
             </DataGrid.ContextMenu>
         </DataGrid>
     </Grid>
-</Controls:MetroWindow>
+</controls:MetroWindow>

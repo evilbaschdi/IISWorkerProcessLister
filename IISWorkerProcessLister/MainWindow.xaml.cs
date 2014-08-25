@@ -13,16 +13,18 @@ namespace IISWorkerProcessLister
     /// </summary>
     // ReSharper disable RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
-    // ReSharper restore RedundantExtendsListEntry
+        // ReSharper restore RedundantExtendsListEntry
     {
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly WorkerProcesses _workerProcesses;
+        private readonly ApplicationSettings _applicationSettings;
 
         public MainWindow()
         {
+            
             InitializeComponent();
-            var applicationSettings = new ApplicationSettings(this);
-            applicationSettings.StartMinimized();
+            //_applicationSettings = new ApplicationSettings(this);
+            //_applicationSettings.StartMinimized();
 
             _workerProcesses = new WorkerProcesses();
 
@@ -30,18 +32,17 @@ namespace IISWorkerProcessLister
             _dispatcherTimer.Tick += DispatcherTimerTick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             _dispatcherTimer.Start();
+            
         }
 
         protected override void OnStateChanged(EventArgs e)
         {
             if (WindowState == WindowState.Minimized)
-            {
-                Hide();
-            }
+                this.Hide();
 
             base.OnStateChanged(e);
         }
-
+        
         private void DispatcherTimerTick(object sender, EventArgs e)
         {
             GetWorkerProcesses();
@@ -51,21 +52,22 @@ namespace IISWorkerProcessLister
         {
             WorkerProcessesDataGrid.ItemsSource = _workerProcesses.ItemsSource();
         }
-
+        
         private void KillProcessClick(object sender, RoutedEventArgs e)
         {
             //Get the clicked MenuItem
-            var menuItem = (MenuItem)sender;
+            var menuItem = (MenuItem) sender;
 
             //Get the ContextMenu to which the menuItem belongs
-            var contextMenu = (ContextMenu)menuItem.Parent;
+            var contextMenu = (ContextMenu) menuItem.Parent;
 
             //Find the placementTarget
-            var item = (DataGrid)contextMenu.PlacementTarget;
-
+            var item = (DataGrid) contextMenu.PlacementTarget;
+            
             _workerProcesses.CloseWorkerProcess(item);
 
             GetWorkerProcesses();
         }
+
     }
 }
