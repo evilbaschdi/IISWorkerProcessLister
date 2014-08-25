@@ -69,7 +69,15 @@ namespace IISWorkerProcessLister.Internal
                 //applicationPoolApplications = applicationPoolApplications.Replace(site.Name + "/,", "");
             }
 
-            return applicationPoolApplications.Remove(applicationPoolApplications.Trim().Length - 1, 1);
+            try
+            {
+                return applicationPoolApplications.Remove(applicationPoolApplications.Trim().Length - 1, 1);
+            }
+
+            catch (Exception)
+            {
+                return "";
+            }
         }
 
 

@@ -3,6 +3,7 @@
     <!--ACCENT COLORS-->
     <Color x:Key="HighlightDarkColor">#FF086F9E</Color>
     <Color x:Key="HighlightLightColor">#FF086F9E</Color>
+    <Color x:Key="HighlightColor">#FF086F9E</Color>
     <!--60%-->
     <Color x:Key="AccentColor2">#99119EDA</Color>
     <!--40%-->
