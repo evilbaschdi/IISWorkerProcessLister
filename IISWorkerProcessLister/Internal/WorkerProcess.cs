@@ -1,11 +1,11 @@
-﻿using System.IO;
+﻿using Microsoft.Web.Administration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
-using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister.Internal
 {
@@ -62,9 +62,8 @@ namespace IISWorkerProcessLister.Internal
             {
                 applicationPoolApplications = GetApplicationPoolApplications(appPoolName, site);
             }
-            
-            return applicationPoolApplications;
 
+            return applicationPoolApplications;
         }
 
         private string GetApplicationPoolApplications(string appPoolName, Site site)
@@ -77,19 +76,18 @@ namespace IISWorkerProcessLister.Internal
                 {
                     applicationPoolApplications += string.Format("{0}{1}, ", site.Name, application.Path);
                     File.AppendAllText(@"c:\temp\test.txt",
-                        application.ApplicationPoolName+": " + applicationPoolApplications + "appPoolName: " + appPoolName + Environment.NewLine);
+                        application.ApplicationPoolName + ": " + applicationPoolApplications + "appPoolName: " + appPoolName + Environment.NewLine);
                     //applicationPoolApplications = applicationPoolApplications.Replace(site.Name + "/,", "");
                 }
             }
             return applicationPoolApplications;//.Remove(applicationPoolApplications.Trim().Length - 1, 1);
         }
 
-
         public void CloseWorkerProcess(DataGrid item)
         {
             //Get the underlying item, that you cast to your object that is bound
             //to the DataGrid (and has subject and state as property)
-            var workerProcessItem = (WorkerProcessItem) item.SelectedCells[0].Item;
+            var workerProcessItem = (WorkerProcessItem)item.SelectedCells[0].Item;
 
             CloseByProcessId(workerProcessItem.ProcessId);
         }
