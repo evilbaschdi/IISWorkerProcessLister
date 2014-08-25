@@ -1,10 +1,11 @@
-﻿using System;
+﻿using System.IO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Controls;
 using Microsoft.Web.Administration;
-using Application = Microsoft.Web.Administration.Application;
 
 namespace IISWorkerProcessLister.Internal
 {
@@ -15,18 +16,18 @@ namespace IISWorkerProcessLister.Internal
         public BindingList<WorkerProcessItem> ItemsSource()
         {
             var serverManager = new ServerManager();
-            WorkerProcessCollection workerProcessCollection = serverManager.WorkerProcesses;
+            var workerProcesses = serverManager.WorkerProcesses;
 
             var itemsSource = new BindingList<WorkerProcessItem>();
             itemsSource.Clear();
 
-            foreach (var process in workerProcessCollection)
+            foreach (var process in workerProcesses)
             {
-                string appPoolName = process.AppPoolName;
-                int processId = process.ProcessId;
+                var appPoolName = process.AppPoolName;
+                //var processId = process.ProcessId;
 
-                WorkerProcessShortInfo += String.Format("App Pool: {0} | Process Id: {1}{2}", appPoolName, processId,
-                    Environment.NewLine);
+                //WorkerProcessShortInfo += string.Format("App Pool: {0} | Process Id: {1}{2}", appPoolName, processId,
+                //    Environment.NewLine);
 
                 var workerProcessItem = new WorkerProcessItem
                 {
@@ -42,7 +43,7 @@ namespace IISWorkerProcessLister.Internal
 
         public void CloseByProcessId(int processId)
         {
-            Process process = Process.GetProcessById(processId);
+            var process = Process.GetProcessById(processId);
 
             process.CloseMainWindow();
             process.WaitForExit(10000);
@@ -55,36 +56,40 @@ namespace IISWorkerProcessLister.Internal
 
         private string ReturnApplicationPoolSitesAndApplications(IEnumerable<Site> sites, string appPoolName)
         {
-            string applicationPoolApplications = "";
+            var applicationPoolApplications = "";
 
-            foreach (Site site in sites)
+            foreach (var site in sites)
             {
-                foreach (Application application in site.Applications)
+                applicationPoolApplications = GetApplicationPoolApplications(appPoolName, site);
+            }
+            
+            return applicationPoolApplications;
+
+        }
+
+        private string GetApplicationPoolApplications(string appPoolName, Site site)
+        {
+            var applicationPoolApplications = "";
+
+            foreach (var application in site.Applications)
+            {
+                if (application.ApplicationPoolName.Trim() == appPoolName.Trim())
                 {
-                    if (application.ApplicationPoolName == appPoolName)
-                    {
-                        applicationPoolApplications += String.Format("{0}{1}, ", site.Name, application.Path);
-                    }
+                    applicationPoolApplications += string.Format("{0}{1}, ", site.Name, application.Path);
+                    File.AppendAllText(@"c:\temp\test.txt",
+                        application.ApplicationPoolName+": " + applicationPoolApplications + "appPoolName: " + appPoolName + Environment.NewLine);
+                    //applicationPoolApplications = applicationPoolApplications.Replace(site.Name + "/,", "");
                 }
-                //applicationPoolApplications = applicationPoolApplications.Replace(site.Name + "/,", "");
             }
-
-            try
-            {
-                return applicationPoolApplications.Remove(applicationPoolApplications.Trim().Length - 1, 1);
-            }
-
-            catch (Exception)
-            {
-                return "";
-            }
+            return applicationPoolApplications;//.Remove(applicationPoolApplications.Trim().Length - 1, 1);
         }
 
 
         public void CloseWorkerProcess(DataGrid item)
-        {//Get the underlying item, that you cast to your object that is bound
+        {
+            //Get the underlying item, that you cast to your object that is bound
             //to the DataGrid (and has subject and state as property)
-            var workerProcessItem = (WorkerProcessItem)item.SelectedCells[0].Item;
+            var workerProcessItem = (WorkerProcessItem) item.SelectedCells[0].Item;
 
             CloseByProcessId(workerProcessItem.ProcessId);
         }

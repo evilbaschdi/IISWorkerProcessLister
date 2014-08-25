@@ -23,8 +23,8 @@ namespace IISWorkerProcessLister
         {
             
             InitializeComponent();
-            _applicationSettings = new ApplicationSettings(this);
-            _applicationSettings.StartMinimized();
+            //_applicationSettings = new ApplicationSettings(this);
+            //_applicationSettings.StartMinimized();
 
             _workerProcesses = new WorkerProcesses();
 
