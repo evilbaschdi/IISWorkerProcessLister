@@ -73,10 +73,13 @@ namespace IISWorkerProcessLister.Internal
 
             foreach (var site in sites)
             {
+                //var tempString = GetApplicationPoolApplications(appPoolName, site);
+                //applicationPoolApplications += tempString.Replace(site.Name + "/,", "");
+
                 applicationPoolApplications += GetApplicationPoolApplications(appPoolName, site);
             }
 
-            return applicationPoolApplications;
+            return applicationPoolApplications.Remove(applicationPoolApplications.Trim().Length - 1, 1);
         }
 
         private string GetApplicationPoolApplications(string appPoolName, Site site)
@@ -90,13 +93,10 @@ namespace IISWorkerProcessLister.Internal
                     (application.ApplicationPoolName.Trim() == appPoolName.Trim()))
                 {
                     applicationPoolApplications += string.Format("{0}{1}, ", site.Name, application.Path);
-                    
-
-                    //applicationPoolApplications = applicationPoolApplications.Replace(site.Name + "/,", "");
                 }
             }
             
-            return applicationPoolApplications;//.Remove(applicationPoolApplications.Trim().Length - 1, 1);
+            return applicationPoolApplications;
         }
 
         public void CloseWorkerProcess(DataGrid item)
