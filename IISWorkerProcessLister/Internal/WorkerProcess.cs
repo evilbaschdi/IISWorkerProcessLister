@@ -24,20 +24,33 @@ namespace IISWorkerProcessLister.Internal
             foreach (var process in workerProcesses)
             {
                 var appPoolName = process.AppPoolName;
-                //var processId = process.ProcessId;
+                var applicationPoolSitesAndApplications = ReturnApplicationPoolSitesAndApplications(
+                    serverManager.Sites, appPoolName);
+                var processId = process.ProcessId;
+                var state = process.State.ToString();
 
                 //WorkerProcessShortInfo += string.Format("App Pool: {0} | Process Id: {1}{2}", appPoolName, processId,
                 //    Environment.NewLine);
 
                 var workerProcessItem = new WorkerProcessItem
                 {
-                    ProcessId = process.ProcessId,
-                    AppPoolName = process.AppPoolName,
-                    Applications = ReturnApplicationPoolSitesAndApplications(serverManager.Sites, appPoolName),
-                    State = process.State.ToString()
+                    ProcessId = processId,
+                    AppPoolName = appPoolName,
+                    Applications = applicationPoolSitesAndApplications,
+                    State = state,
                 };
+
+                //File.AppendAllText(@"c:\temp\test.txt",
+                //        "ProcessID: " + processId + "|" +
+                //        "AppPoolName: " + appPoolName + "|" +
+                //        "Applications: " + applicationPoolSitesAndApplications + "|" +
+                //        "State: " + state +
+                //        Environment.NewLine);
+
                 itemsSource.Add(workerProcessItem);
             }
+
+            
             return itemsSource;
         }
 
@@ -60,7 +73,7 @@ namespace IISWorkerProcessLister.Internal
 
             foreach (var site in sites)
             {
-                applicationPoolApplications = GetApplicationPoolApplications(appPoolName, site);
+                applicationPoolApplications += GetApplicationPoolApplications(appPoolName, site);
             }
 
             return applicationPoolApplications;
@@ -72,14 +85,17 @@ namespace IISWorkerProcessLister.Internal
 
             foreach (var application in site.Applications)
             {
-                if (application.ApplicationPoolName.Trim() == appPoolName.Trim())
+                if (!string.IsNullOrWhiteSpace(appPoolName) &&
+                    !string.IsNullOrWhiteSpace(application.ApplicationPoolName) &&
+                    (application.ApplicationPoolName.Trim() == appPoolName.Trim()))
                 {
                     applicationPoolApplications += string.Format("{0}{1}, ", site.Name, application.Path);
-                    File.AppendAllText(@"c:\temp\test.txt",
-                        application.ApplicationPoolName + ": " + applicationPoolApplications + "appPoolName: " + appPoolName + Environment.NewLine);
+                    
+
                     //applicationPoolApplications = applicationPoolApplications.Replace(site.Name + "/,", "");
                 }
             }
+            
             return applicationPoolApplications;//.Remove(applicationPoolApplications.Trim().Length - 1, 1);
         }
 
