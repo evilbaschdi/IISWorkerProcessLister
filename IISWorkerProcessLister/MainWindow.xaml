@@ -3,7 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       ResizeMode="CanMinimize"
-                      Title="IIS Worker Processes" Height="350" Width="1024" Icon="server.ico"
+                      Height="350" Width="1024" Icon="server.ico"
                       WindowStartupLocation="CenterScreen"
                       Style="{DynamicResource VSWindowStyleKey}">
     <Grid>

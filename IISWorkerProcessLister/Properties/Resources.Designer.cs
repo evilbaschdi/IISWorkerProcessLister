@@ -59,5 +59,32 @@ namespace IISWorkerProcessLister.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open....
+        /// </summary>
+        internal static string ApplicationSettings_NotifyIconContextMenu_Open {
+            get {
+                return ResourceManager.GetString("ApplicationSettings_NotifyIconContextMenu_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IIS Worker Processes.
+        /// </summary>
+        internal static string ApplicationSettings_StartMinimized_BalloonTipTitle {
+            get {
+                return ResourceManager.GetString("ApplicationSettings_StartMinimized_BalloonTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IIS Worker Processes.
+        /// </summary>
+        internal static string MainWindow_Title {
+            get {
+                return ResourceManager.GetString("MainWindow_Title", resourceCulture);
+            }
+        }
     }
 }

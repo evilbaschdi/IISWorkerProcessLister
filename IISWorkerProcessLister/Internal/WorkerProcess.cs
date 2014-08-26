@@ -11,6 +11,7 @@ namespace IISWorkerProcessLister.Internal
 {
     public class WorkerProcesses
     {
+        public string WorkerProcessInfo { get; set; }
         public string WorkerProcessShortInfo { get; set; }
 
         public BindingList<WorkerProcessItem> ItemsSource()
@@ -20,6 +21,8 @@ namespace IISWorkerProcessLister.Internal
 
             var itemsSource = new BindingList<WorkerProcessItem>();
             itemsSource.Clear();
+            WorkerProcessInfo = string.Empty;
+            WorkerProcessShortInfo = string.Empty;
 
             foreach (var process in workerProcesses)
             {
@@ -29,8 +32,7 @@ namespace IISWorkerProcessLister.Internal
                 var processId = process.ProcessId;
                 var state = process.State.ToString();
 
-                //WorkerProcessShortInfo += string.Format("App Pool: {0} | Process Id: {1}{2}", appPoolName, processId,
-                //    Environment.NewLine);
+                
 
                 var workerProcessItem = new WorkerProcessItem
                 {
@@ -40,12 +42,13 @@ namespace IISWorkerProcessLister.Internal
                     State = state,
                 };
 
-                //File.AppendAllText(@"c:\temp\test.txt",
-                //        "ProcessID: " + processId + "|" +
-                //        "AppPoolName: " + appPoolName + "|" +
-                //        "Applications: " + applicationPoolSitesAndApplications + "|" +
-                //        "State: " + state +
-                //        Environment.NewLine);
+                var workerProcessInfo = string.Format("App Pool: {0} | Process ID: {1} | State: {2}{3}", appPoolName, processId, state, Environment.NewLine);
+                var workerPorocessShortInfo = string.Format("{0} | {1}{2}", appPoolName, processId, Environment.NewLine);
+
+                //File.AppendAllText(@"c:\temp\test.txt", shortInfo);
+
+                WorkerProcessInfo += workerProcessInfo;
+                WorkerProcessShortInfo += workerPorocessShortInfo;
 
                 itemsSource.Add(workerProcessItem);
             }

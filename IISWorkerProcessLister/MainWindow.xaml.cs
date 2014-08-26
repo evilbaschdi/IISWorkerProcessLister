@@ -23,11 +23,11 @@ namespace IISWorkerProcessLister
         {
             
             InitializeComponent();
-            //_applicationSettings = new ApplicationSettings(this);
-            //_applicationSettings.StartMinimized();
+            Title = Properties.Resources.MainWindow_Title;
+            _applicationSettings = new ApplicationSettings(this);
 
             _workerProcesses = new WorkerProcesses();
-
+            
             GetWorkerProcesses();
             _dispatcherTimer.Tick += DispatcherTimerTick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
@@ -51,6 +51,8 @@ namespace IISWorkerProcessLister
         private void GetWorkerProcesses()
         {
             WorkerProcessesDataGrid.ItemsSource = _workerProcesses.ItemsSource();
+            _applicationSettings.SetBalloonTipText(_workerProcesses.WorkerProcessInfo);
+            _applicationSettings.SetHoverText(_workerProcesses.WorkerProcessShortInfo);
         }
         
         private void KillProcessClick(object sender, RoutedEventArgs e)
