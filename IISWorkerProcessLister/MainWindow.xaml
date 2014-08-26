@@ -28,8 +28,8 @@
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu Name="StoryMenu" StaysOpen="True">
-                    <!--<MenuItem Header="Recycle" Command="{Binding RecycleCommand}" />
-                    <MenuItem Header="Stop" Command="{Binding StopCommand}" />-->
+                    <MenuItem Header="Recycle Application Pool" Click="RecycleAppPoolClick" />
+                    <!--<MenuItem Header="Stop Site(s)" Command="{Binding StopCommand}" />-->
                     <MenuItem Header="Kill Process" Click="KillProcessClick" />
                 </ContextMenu>
             </DataGrid.ContextMenu>

@@ -3,7 +3,6 @@ using IISWorkerProcessLister.Internal;
 using MahApps.Metro.Controls;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace IISWorkerProcessLister
@@ -15,34 +14,36 @@ namespace IISWorkerProcessLister
     public partial class MainWindow : MetroWindow
         // ReSharper restore RedundantExtendsListEntry
     {
+        private readonly ApplicationSettings _applicationSettings;
+        private readonly DataGridUtilities _datagridUtilities;
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly WorkerProcesses _workerProcesses;
-        private readonly ApplicationSettings _applicationSettings;
 
         public MainWindow()
         {
-            
             InitializeComponent();
             Title = Properties.Resources.MainWindow_Title;
             _applicationSettings = new ApplicationSettings(this);
+            _datagridUtilities = new DataGridUtilities();
 
             _workerProcesses = new WorkerProcesses();
-            
+
             GetWorkerProcesses();
             _dispatcherTimer.Tick += DispatcherTimerTick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             _dispatcherTimer.Start();
-            
         }
 
         protected override void OnStateChanged(EventArgs e)
         {
             if (WindowState == WindowState.Minimized)
-                this.Hide();
+            {
+                Hide();
+            }
 
             base.OnStateChanged(e);
         }
-        
+
         private void DispatcherTimerTick(object sender, EventArgs e)
         {
             GetWorkerProcesses();
@@ -54,22 +55,23 @@ namespace IISWorkerProcessLister
             _applicationSettings.SetBalloonTipText(_workerProcesses.WorkerProcessInfo);
             _applicationSettings.SetHoverText(_workerProcesses.WorkerProcessShortInfo);
         }
-        
+
         private void KillProcessClick(object sender, RoutedEventArgs e)
         {
-            //Get the clicked MenuItem
-            var menuItem = (MenuItem) sender;
+            var item = _datagridUtilities.GetDataGridItem(sender);
 
-            //Get the ContextMenu to which the menuItem belongs
-            var contextMenu = (ContextMenu) menuItem.Parent;
-
-            //Find the placementTarget
-            var item = (DataGrid) contextMenu.PlacementTarget;
-            
             _workerProcesses.CloseWorkerProcess(item);
 
             GetWorkerProcesses();
         }
 
+        private void RecycleAppPoolClick(object sender, RoutedEventArgs e)
+        {
+            var item = _datagridUtilities.GetDataGridItem(sender);
+
+            _workerProcesses.RecycleApplicationPool(item);
+
+            GetWorkerProcesses();
+        }
     }
 }

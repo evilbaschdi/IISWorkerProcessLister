@@ -101,6 +101,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\DataGridUtilities.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Internal\WorkerProcess.cs" />
     <Compile Include="Style\AppTreeItem.cs" />

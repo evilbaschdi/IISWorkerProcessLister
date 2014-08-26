@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Windows.Controls;
 
 namespace IISWorkerProcessLister.Internal
@@ -12,6 +10,7 @@ namespace IISWorkerProcessLister.Internal
     public class WorkerProcesses
     {
         public string WorkerProcessInfo { get; set; }
+
         public string WorkerProcessShortInfo { get; set; }
 
         public BindingList<WorkerProcessItem> ItemsSource()
@@ -32,8 +31,6 @@ namespace IISWorkerProcessLister.Internal
                 var processId = process.ProcessId;
                 var state = process.State.ToString();
 
-                
-
                 var workerProcessItem = new WorkerProcessItem
                 {
                     ProcessId = processId,
@@ -42,7 +39,8 @@ namespace IISWorkerProcessLister.Internal
                     State = state,
                 };
 
-                var workerProcessInfo = string.Format("App Pool: {0} | Process ID: {1} | State: {2}{3}", appPoolName, processId, state, Environment.NewLine);
+                var workerProcessInfo = string.Format("App Pool: {0} | Process ID: {1} | State: {2}{3}", appPoolName,
+                    processId, state, Environment.NewLine);
                 var workerPorocessShortInfo = string.Format("{0} | {1}{2}", appPoolName, processId, Environment.NewLine);
 
                 //File.AppendAllText(@"c:\temp\test.txt", shortInfo);
@@ -53,7 +51,6 @@ namespace IISWorkerProcessLister.Internal
                 itemsSource.Add(workerProcessItem);
             }
 
-            
             return itemsSource;
         }
 
@@ -98,17 +95,27 @@ namespace IISWorkerProcessLister.Internal
                     applicationPoolApplications += string.Format("{0}{1}, ", site.Name, application.Path);
                 }
             }
-            
+
             return applicationPoolApplications;
         }
 
-        public void CloseWorkerProcess(DataGrid item)
+        internal void CloseWorkerProcess(DataGrid item)
+        {
+            CloseByProcessId(GetWorkerProcessItem(item).ProcessId);
+        }
+
+        private static WorkerProcessItem GetWorkerProcessItem(DataGrid item)
         {
             //Get the underlying item, that you cast to your object that is bound
             //to the DataGrid (and has subject and state as property)
             var workerProcessItem = (WorkerProcessItem)item.SelectedCells[0].Item;
+            return workerProcessItem;
+        }
 
-            CloseByProcessId(workerProcessItem.ProcessId);
+        internal void RecycleApplicationPool(DataGrid item)
+        {
+            var serverManager = new ServerManager();
+            serverManager.ApplicationPools[GetWorkerProcessItem(item).AppPoolName].Recycle();
         }
     }
 }
