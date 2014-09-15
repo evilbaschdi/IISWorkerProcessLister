@@ -51,16 +51,6 @@ namespace IISWorkerProcessLister.Core
             return contextMenu;
         }
 
-        public void SetBalloonTipText(string text)
-        {
-            _ni.BalloonTipText = text;
-        }
-
-        public void SetHoverText(string text)
-        {
-            _ni.Text = text.MaxLengthCutRight(63);
-        }
-
         private void ContextMenuItemClose_Click(object sender, EventArgs e)
         {
             // Will Close Your Application

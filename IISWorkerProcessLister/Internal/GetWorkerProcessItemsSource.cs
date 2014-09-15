@@ -7,12 +7,14 @@ namespace IISWorkerProcessLister.Internal
     public class GetWorkerProcessItemsSource : IItemsSource
     {
         private readonly IApplicationPoolSitesAndApplications _applicationPoolSitesAndApplications;
+        private readonly IExtendedInformation _extendedInformation;
         private readonly ServerManager _serverManager;
+        private readonly IShortInformation _shortInformation;
         private readonly IWorkerProcessItem _workerProcessItem;
 
         public GetWorkerProcessItemsSource(IApplicationPoolSitesAndApplications applicationPoolSitesAndApplications,
-            IWorkerProcessItem workerProcessItem,
-            ServerManager serverManager)
+            IWorkerProcessItem workerProcessItem, ServerManager serverManager, IExtendedInformation extendedInformation,
+            IShortInformation shortInformation)
         {
             if (applicationPoolSitesAndApplications == null)
             {
@@ -26,9 +28,19 @@ namespace IISWorkerProcessLister.Internal
             {
                 throw new ArgumentNullException("serverManager");
             }
+            if (extendedInformation == null)
+            {
+                throw new ArgumentNullException("extendedInformation");
+            }
+            if (shortInformation == null)
+            {
+                throw new ArgumentNullException("shortInformation");
+            }
             _applicationPoolSitesAndApplications = applicationPoolSitesAndApplications;
             _workerProcessItem = workerProcessItem;
             _serverManager = serverManager;
+            _extendedInformation = extendedInformation;
+            _shortInformation = shortInformation;
         }
 
         public BindingList<IWorkerProcessItem> Value
@@ -37,8 +49,8 @@ namespace IISWorkerProcessLister.Internal
             {
                 var itemsSource = new BindingList<IWorkerProcessItem>();
                 itemsSource.Clear();
-                //WorkerProcessInfo = string.Empty;
-                //WorkerProcessShortInfo = string.Empty;
+                _extendedInformation.Value = string.Empty;
+                _shortInformation.Value = string.Empty;
 
                 foreach (var process in _serverManager.WorkerProcesses)
                 {
@@ -53,14 +65,11 @@ namespace IISWorkerProcessLister.Internal
                     _workerProcessItem.Applications = applicationPoolSitesAndApplications;
                     _workerProcessItem.State = state;
 
-                    var workerProcessInfo = string.Format("App Pool: {0} | Process ID: {1} | State: {2}{3}",
+                    _extendedInformation.Value += string.Format("App Pool: {0} | Process ID: {1} | State: {2}{3}",
                         appPoolName,
                         processId, state, Environment.NewLine);
-                    var workerPorocessShortInfo = string.Format("{0} | {1}{2}", appPoolName, processId,
+                    _shortInformation.Value += string.Format("{0} | {1}{2}", appPoolName, processId,
                         Environment.NewLine);
-
-                    //WorkerProcessInfo += workerProcessInfo;
-                    //WorkerProcessShortInfo += workerPorocessShortInfo;
 
                     itemsSource.Add(_workerProcessItem);
                 }

@@ -124,7 +124,7 @@
     <Compile Include="Internal\IApplicationPoolApplications.cs" />
     <Compile Include="Internal\IApplicationPoolSitesAndApplications.cs" />
     <Compile Include="Internal\IItemsSource.cs" />
-    <Compile Include="Internal\IWorkerProccessInformation.cs" />
+    <Compile Include="Internal\IWorkerProcessInformation.cs" />
     <Compile Include="Internal\IWorkerProcess.cs" />
     <Compile Include="Internal\IWorkerProcessDataGridItem.cs" />
     <Compile Include="Internal\RecycleApplicationPool.cs">
@@ -134,10 +134,11 @@
       <DependentUpon>IApplicationPoolSitesAndApplications.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\WorkerProcessInformation.cs">
-      <DependentUpon>IWorkerProccessInformation.cs</DependentUpon>
+      <DependentUpon>IWorkerProcessInformation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\WorkerProcessShortInformation.cs">
-      <DependentUpon>IWorkerProccessInformation.cs</DependentUpon>
+    <Compile Include="Main\IMain.cs" />
+    <Compile Include="Main\Execute.cs">
+      <DependentUpon>IMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Style\AppTreeItem.cs" />
     <Compile Include="Style\CloseTabItemAction.cs" />
