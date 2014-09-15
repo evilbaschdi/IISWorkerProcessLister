@@ -100,14 +100,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\SetApplicationSettings.cs" />
     <Compile Include="Core\GetDataGridItem.cs">
       <DependentUpon>IDataGridItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Core\IApplicationSettings.cs" />
     <Compile Include="Core\IDataGridItem.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Internal\CloseWorkerProcessByProcessId.cs">
       <DependentUpon>IWorkerProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\ExtendedInformation.cs">
+      <DependentUpon>IExtendedInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\GetApplicationPoolApplications.cs">
       <DependentUpon>IApplicationPoolApplications.cs</DependentUpon>
@@ -123,7 +127,9 @@
     </Compile>
     <Compile Include="Internal\IApplicationPoolApplications.cs" />
     <Compile Include="Internal\IApplicationPoolSitesAndApplications.cs" />
+    <Compile Include="Internal\IExtendedInformation.cs" />
     <Compile Include="Internal\IItemsSource.cs" />
+    <Compile Include="Internal\IShortInformation.cs" />
     <Compile Include="Internal\IWorkerProcessInformation.cs" />
     <Compile Include="Internal\IWorkerProcess.cs" />
     <Compile Include="Internal\IWorkerProcessDataGridItem.cs" />
@@ -132,6 +138,9 @@
     </Compile>
     <Compile Include="Internal\ReturnApplicationPoolSitesAndApplications.cs">
       <DependentUpon>IApplicationPoolSitesAndApplications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\ShortInformation.cs">
+      <DependentUpon>IShortInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\WorkerProcessInformation.cs">
       <DependentUpon>IWorkerProcessInformation.cs</DependentUpon>

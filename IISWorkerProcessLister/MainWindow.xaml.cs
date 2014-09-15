@@ -5,6 +5,7 @@ using MahApps.Metro.Controls;
 using Microsoft.Web.Administration;
 using System;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Threading;
 
 namespace IISWorkerProcessLister
@@ -16,17 +17,21 @@ namespace IISWorkerProcessLister
     public partial class MainWindow : MetroWindow
     // ReSharper restore RedundantExtendsListEntry
     {
+        private readonly IApplicationSettings _applicationSettings;
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly IMain _main;
 
         public MainWindow()
         {
             InitializeComponent();
-            Title = Properties.Resources.MainWindow_Title;
 
             _dispatcherTimer.Tick += DispatcherTimerTick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             _dispatcherTimer.Start();
+
+            _applicationSettings = new SetApplicationSettings(this, new NotifyIcon());
+            _applicationSettings.Run();
+
             _main = new Execute(this);
             _main.Run();
         }
