@@ -6,13 +6,13 @@ namespace IISWorkerProcessLister.Style
 {
     public class CloseTabItemAction : TriggerAction<DependencyObject>
     {
-        protected override void Invoke(object parameter)
-        {
-            this.TabControl.Items.Remove(this.TabItem);
-        }
-
         public static readonly DependencyProperty TabControlProperty =
-            DependencyProperty.Register("TabControl", typeof(TabControl), typeof(CloseTabItemAction), new PropertyMetadata(default(TabControl)));
+            DependencyProperty.Register("TabControl", typeof(TabControl), typeof(CloseTabItemAction),
+                new PropertyMetadata(default(TabControl)));
+
+        public static readonly DependencyProperty TabItemProperty =
+            DependencyProperty.Register("TabItem", typeof(TabItem), typeof(CloseTabItemAction),
+                new PropertyMetadata(default(TabItem)));
 
         public TabControl TabControl
         {
@@ -20,13 +20,15 @@ namespace IISWorkerProcessLister.Style
             set { SetValue(TabControlProperty, value); }
         }
 
-        public static readonly DependencyProperty TabItemProperty =
-            DependencyProperty.Register("TabItem", typeof(TabItem), typeof(CloseTabItemAction), new PropertyMetadata(default(TabItem)));
-
         public TabItem TabItem
         {
             get { return (TabItem)GetValue(TabItemProperty); }
             set { SetValue(TabItemProperty, value); }
+        }
+
+        protected override void Invoke(object parameter)
+        {
+            TabControl.Items.Remove(TabItem);
         }
     }
 }

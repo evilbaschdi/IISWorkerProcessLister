@@ -1,10 +1,9 @@
+using IISWorkerProcessLister.Properties;
 using System;
-using System.Linq;
+using System.Drawing;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
-using IISWorkerProcessLister.Properties;
-using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister.Core
 {
@@ -23,17 +22,16 @@ namespace IISWorkerProcessLister.Core
         {
             _ni = new NotifyIcon
             {
-                Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location),
+                Icon = Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location),
                 BalloonTipTitle = Resources.ApplicationSettings_StartMinimized_BalloonTipTitle,
                 Visible = true
             };
-           
+
             _mainWindow.Hide();
 
             _ni.ContextMenu = NotifyIconContextMenu();
             _ni.DoubleClick += NotifyIcon_DoubleClick;
             //_ni.Click += (sender, args) => _ni.ShowBalloonTip(10);
-
         }
 
         private ContextMenu NotifyIconContextMenu()
@@ -48,7 +46,7 @@ namespace IISWorkerProcessLister.Core
 
             restore.Click += ContextMenuItemRestore_Click;
 
-            contextMenu.MenuItems.AddRange(new[] { restore});
+            contextMenu.MenuItems.AddRange(new[] { restore });
 
             return contextMenu;
         }
@@ -65,21 +63,21 @@ namespace IISWorkerProcessLister.Core
 
         private void ContextMenuItemClose_Click(object sender, EventArgs e)
         {
-            // Will Close Your Application 
+            // Will Close Your Application
             _ni.Dispose();
             //Application.Exit();
         }
 
         private void ContextMenuItemRestore_Click(object sender, EventArgs e)
         {
-            //Will Restore Your Application 
+            //Will Restore Your Application
             _mainWindow.Show();
             _mainWindow.WindowState = WindowState.Normal;
         }
 
         private void NotifyIcon_DoubleClick(object sender, EventArgs e)
         {
-            //Will Restore Your Application 
+            //Will Restore Your Application
             _mainWindow.Show();
             _mainWindow.WindowState = WindowState.Normal;
         }

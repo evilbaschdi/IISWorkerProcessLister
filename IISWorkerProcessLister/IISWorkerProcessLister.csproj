@@ -101,12 +101,47 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\ApplicationSettings.cs" />
-    <Compile Include="Core\DataGridUtilities.cs" />
+    <Compile Include="Core\GetDataGridItem.cs">
+      <DependentUpon>IDataGridItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\IDataGridItem.cs" />
     <Compile Include="Core\StringExtensions.cs" />
-    <Compile Include="Internal\WorkerProcess.cs" />
+    <Compile Include="Internal\CloseWorkerProcessByProcessId.cs">
+      <DependentUpon>IWorkerProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\GetApplicationPoolApplications.cs">
+      <DependentUpon>IApplicationPoolApplications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\GetWorkerProcessItem.cs">
+      <DependentUpon>IWorkerProcessItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\GetWorkerProcessItemByDataGridItem.cs">
+      <DependentUpon>IWorkerProcessDataGridItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\GetWorkerProcessItemsSource.cs">
+      <DependentUpon>IItemsSource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\IApplicationPoolApplications.cs" />
+    <Compile Include="Internal\IApplicationPoolSitesAndApplications.cs" />
+    <Compile Include="Internal\IItemsSource.cs" />
+    <Compile Include="Internal\IWorkerProccessInformation.cs" />
+    <Compile Include="Internal\IWorkerProcess.cs" />
+    <Compile Include="Internal\IWorkerProcessDataGridItem.cs" />
+    <Compile Include="Internal\RecycleApplicationPool.cs">
+      <DependentUpon>IWorkerProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\ReturnApplicationPoolSitesAndApplications.cs">
+      <DependentUpon>IApplicationPoolSitesAndApplications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\WorkerProcessInformation.cs">
+      <DependentUpon>IWorkerProccessInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\WorkerProcessShortInformation.cs">
+      <DependentUpon>IWorkerProccessInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Style\AppTreeItem.cs" />
     <Compile Include="Style\CloseTabItemAction.cs" />
-    <Compile Include="Internal\WorkerProcessItem.cs" />
+    <Compile Include="Internal\IWorkerProcessItem.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

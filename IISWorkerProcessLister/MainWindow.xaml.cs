@@ -1,6 +1,7 @@
 ﻿using IISWorkerProcessLister.Core;
 using IISWorkerProcessLister.Internal;
 using MahApps.Metro.Controls;
+using Microsoft.Web.Administration;
 using System;
 using System.Windows;
 using System.Windows.Threading;
@@ -15,18 +16,17 @@ namespace IISWorkerProcessLister
         // ReSharper restore RedundantExtendsListEntry
     {
         private readonly ApplicationSettings _applicationSettings;
-        private readonly DataGridUtilities _datagridUtilities;
+        private readonly IDataGridItem _dataGridItem;
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-        private readonly WorkerProcesses _workerProcesses;
+        private readonly IWorkerProccessInformation _workerProcessInformation;
 
         public MainWindow()
         {
             InitializeComponent();
             Title = Properties.Resources.MainWindow_Title;
             _applicationSettings = new ApplicationSettings(this);
-            _datagridUtilities = new DataGridUtilities();
-
-            _workerProcesses = new WorkerProcesses();
+            _dataGridItem = new GetDataGridItem();
+            _workerProcessInformation = new WorkerProcessInformation();
 
             GetWorkerProcesses();
             _dispatcherTimer.Tick += DispatcherTimerTick;
@@ -51,26 +51,34 @@ namespace IISWorkerProcessLister
 
         private void GetWorkerProcesses()
         {
-            WorkerProcessesDataGrid.ItemsSource = _workerProcesses.ItemsSource();
-            _applicationSettings.SetBalloonTipText(_workerProcesses.WorkerProcessInfo);
-            _applicationSettings.SetHoverText(_workerProcesses.WorkerProcessShortInfo);
+            var applicationPoolApplications = new GetApplicationPoolApplications();
+            var applicationPoolSitesAndApplications =
+                new ReturnApplicationPoolSitesAndApplications(applicationPoolApplications);
+            var serverManager = new ServerManager();
+            var workerProcessItem = new GetWorkerProcessItem();
+            var itemsSource = new GetWorkerProcessItemsSource(applicationPoolSitesAndApplications, workerProcessItem,
+                serverManager);
+            WorkerProcessesDataGrid.ItemsSource = itemsSource.Value;
+            _applicationSettings.SetBalloonTipText(_workerProcessInformation.Value);
+            //_applicationSettings.SetHoverText(_workerProcesses.WorkerProcessShortInfo);
         }
 
         private void KillProcessClick(object sender, RoutedEventArgs e)
         {
-            var item = _datagridUtilities.GetDataGridItem(sender);
-
-            _workerProcesses.CloseWorkerProcess(item);
-
+            var dataGridItem = new GetDataGridItem();
+            var workerProcessDataGridItem = new GetWorkerProcessItemByDataGridItem(dataGridItem, sender);
+            var workerProcess = new CloseWorkerProcessByProcessId(workerProcessDataGridItem);
+            workerProcess.Run();
             GetWorkerProcesses();
         }
 
         private void RecycleAppPoolClick(object sender, RoutedEventArgs e)
         {
-            var item = _datagridUtilities.GetDataGridItem(sender);
-
-            _workerProcesses.RecycleApplicationPool(item);
-
+            var dataGridItem = new GetDataGridItem();
+            var workerProcessDataGridItem = new GetWorkerProcessItemByDataGridItem(dataGridItem, sender);
+            var serverManager = new ServerManager();
+            var workerProcess = new RecycleApplicationPool(workerProcessDataGridItem, serverManager);
+            workerProcess.Run();
             GetWorkerProcesses();
         }
     }
