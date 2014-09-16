@@ -15,7 +15,7 @@ namespace IISWorkerProcessLister
     /// </summary>
     // ReSharper disable RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
-        // ReSharper restore RedundantExtendsListEntry
+    // ReSharper restore RedundantExtendsListEntry
     {
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly IMain _main;
@@ -33,6 +33,12 @@ namespace IISWorkerProcessLister
 
             _main = new Execute(this);
             _main.Run();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _dispatcherTimer.Tick -= DispatcherTimerTick;
+            base.OnClosed(e);
         }
 
         protected override void OnStateChanged(EventArgs e)
