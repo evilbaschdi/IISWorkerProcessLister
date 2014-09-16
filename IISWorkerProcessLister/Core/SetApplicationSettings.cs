@@ -21,10 +21,10 @@ namespace IISWorkerProcessLister.Core
         public void Run()
         {
             _mainWindow.Title = Resources.MainWindow_Title;
+            StartMinimized();
             _ni.ContextMenu = NotifyIconContextMenu();
             _ni.DoubleClick += NotifyIcon_DoubleClick;
             //_ni.Click += (sender, args) => _ni.ShowBalloonTip(10);
-            StartMinimized();
         }
 
         public void StartMinimized()
@@ -51,7 +51,7 @@ namespace IISWorkerProcessLister.Core
 
             restore.Click += ContextMenuItemRestore_Click;
 
-            contextMenu.MenuItems.AddRange(new[] {restore});
+            contextMenu.MenuItems.AddRange(new[] { restore });
 
             return contextMenu;
         }

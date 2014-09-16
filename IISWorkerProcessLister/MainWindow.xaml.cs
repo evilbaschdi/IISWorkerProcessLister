@@ -15,9 +15,8 @@ namespace IISWorkerProcessLister
     /// </summary>
     // ReSharper disable RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
-    // ReSharper restore RedundantExtendsListEntry
+        // ReSharper restore RedundantExtendsListEntry
     {
-        private readonly IApplicationSettings _applicationSettings;
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly IMain _main;
 
@@ -29,8 +28,8 @@ namespace IISWorkerProcessLister
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             _dispatcherTimer.Start();
 
-            _applicationSettings = new SetApplicationSettings(this, new NotifyIcon());
-            _applicationSettings.Run();
+            var applicationSettings = new SetApplicationSettings(this, new NotifyIcon());
+            applicationSettings.Run();
 
             _main = new Execute(this);
             _main.Run();
