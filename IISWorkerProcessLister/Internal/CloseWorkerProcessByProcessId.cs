@@ -3,10 +3,17 @@ using System.Diagnostics;
 
 namespace IISWorkerProcessLister.Internal
 {
-    public class CloseWorkerProcessByProcessId : IWorkerProcess
+    /// <summary>
+    ///
+    /// </summary>
+    public class CloseWorkerProcessByProcessId : IContextMenuEntry
     {
         private readonly IWorkerProcessDataGridItem _workerProcessDataGridItem;
 
+        /// <summary>
+        /// Const5ructor of the class.
+        /// </summary>
+        /// <param name="workerProcessDataGridItem"></param>
         public CloseWorkerProcessByProcessId(IWorkerProcessDataGridItem workerProcessDataGridItem)
         {
             if (workerProcessDataGridItem == null)
@@ -16,6 +23,9 @@ namespace IISWorkerProcessLister.Internal
             _workerProcessDataGridItem = workerProcessDataGridItem;
         }
 
+        /// <summary>
+        /// Run.
+        /// </summary>
         public void Run()
         {
             var process = Process.GetProcessById(_workerProcessDataGridItem.Item.ProcessId);

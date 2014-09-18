@@ -1,11 +1,11 @@
-﻿using Microsoft.Web.Administration;
+using Microsoft.Web.Administration;
 using System;
 
 namespace IISWorkerProcessLister.Internal
 {
     /// <summary>
     /// </summary>
-    public class RecycleApplicationPool : IContextMenuEntry
+    public class StopApplicationPool : IContextMenuEntry
     {
         private readonly ServerManager _serverManager;
         private readonly IWorkerProcessDataGridItem _workerProcessDataGridItem;
@@ -15,8 +15,7 @@ namespace IISWorkerProcessLister.Internal
         /// </summary>
         /// <param name="workerProcessDataGridItem"></param>
         /// <param name="serverManager"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public RecycleApplicationPool(IWorkerProcessDataGridItem workerProcessDataGridItem, ServerManager serverManager)
+        public StopApplicationPool(IWorkerProcessDataGridItem workerProcessDataGridItem, ServerManager serverManager)
         {
             if (workerProcessDataGridItem == null)
             {
@@ -35,7 +34,7 @@ namespace IISWorkerProcessLister.Internal
         /// </summary>
         public void Run()
         {
-            _serverManager.ApplicationPools[_workerProcessDataGridItem.Item.AppPoolName].Recycle();
+            _serverManager.ApplicationPools[_workerProcessDataGridItem.Item.AppPoolName].Stop();
         }
     }
 }

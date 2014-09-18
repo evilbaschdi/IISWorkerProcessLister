@@ -15,7 +15,7 @@ namespace IISWorkerProcessLister
     /// </summary>
     // ReSharper disable RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
-    // ReSharper restore RedundantExtendsListEntry
+        // ReSharper restore RedundantExtendsListEntry
     {
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly IMain _main;
@@ -71,6 +71,16 @@ namespace IISWorkerProcessLister
             var workerProcessDataGridItem = new GetWorkerProcessItemByDataGridItem(dataGridItem, sender);
             var serverManager = new ServerManager();
             var workerProcess = new RecycleApplicationPool(workerProcessDataGridItem, serverManager);
+            workerProcess.Run();
+            _main.Run();
+        }
+
+        private void StopAppPoolMenuItem_OnClickAppPoolClick(object sender, RoutedEventArgs e)
+        {
+            var dataGridItem = new GetDataGridItem();
+            var workerProcessDataGridItem = new GetWorkerProcessItemByDataGridItem(dataGridItem, sender);
+            var serverManager = new ServerManager();
+            var workerProcess = new StopApplicationPool(workerProcessDataGridItem, serverManager);
             workerProcess.Run();
             _main.Run();
         }

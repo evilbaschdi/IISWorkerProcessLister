@@ -21,6 +21,9 @@ namespace IISWorkerProcessLister.Core
         public void Run()
         {
             _mainWindow.Title = Resources.MainWindow_Title;
+            _mainWindow.RecycleAppPoolMenuItem.Header = Resources.RecycleAppPoolMenuItem_Header;
+            _mainWindow.KillProcessMenuItem.Header = Resources.KillProcessMenuItem_Header;
+            _mainWindow.StopAppPoolMenuItem.Header = Resources.StopAppPoolMenuItem_Header;
             StartMinimized();
             _ni.ContextMenu = NotifyIconContextMenu();
             _ni.DoubleClick += NotifyIcon_DoubleClick;

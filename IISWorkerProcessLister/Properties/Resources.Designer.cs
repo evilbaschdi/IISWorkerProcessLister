@@ -61,7 +61,7 @@ namespace IISWorkerProcessLister.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open....
+        ///   Looks up a localized string similar to Restor Main Application Window....
         /// </summary>
         internal static string ApplicationSettings_NotifyIconContextMenu_Open {
             get {
@@ -79,11 +79,38 @@ namespace IISWorkerProcessLister.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kill Process.
+        /// </summary>
+        internal static string KillProcessMenuItem_Header {
+            get {
+                return ResourceManager.GetString("KillProcessMenuItem_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IIS Worker Processes.
         /// </summary>
         internal static string MainWindow_Title {
             get {
                 return ResourceManager.GetString("MainWindow_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recycle Application Pool.
+        /// </summary>
+        internal static string RecycleAppPoolMenuItem_Header {
+            get {
+                return ResourceManager.GetString("RecycleAppPoolMenuItem_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop Application Pool.
+        /// </summary>
+        internal static string StopAppPoolMenuItem_Header {
+            get {
+                return ResourceManager.GetString("StopAppPoolMenuItem_Header", resourceCulture);
             }
         }
     }
