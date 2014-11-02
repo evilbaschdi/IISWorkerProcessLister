@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 namespace IISWorkerProcessLister.Internal
 {
+    /// <summary>
+    /// Class that adds workerprocess strings to binding list.
+    /// </summary>
     public class GetWorkerProcessItemsSource : IItemsSource
     {
         private readonly IApplicationPoolSitesAndApplications _applicationPoolSitesAndApplications;
@@ -12,6 +15,14 @@ namespace IISWorkerProcessLister.Internal
         private readonly IShortInformation _shortInformation;
         private readonly IWorkerProcessItem _workerProcessItem;
 
+        /// <summary>
+        /// Constructor of the class.
+        /// </summary>
+        /// <param name="applicationPoolSitesAndApplications"></param>
+        /// <param name="workerProcessItem"></param>
+        /// <param name="serverManager"></param>
+        /// <param name="extendedInformation"></param>
+        /// <param name="shortInformation"></param>
         public GetWorkerProcessItemsSource(IApplicationPoolSitesAndApplications applicationPoolSitesAndApplications,
             IWorkerProcessItem workerProcessItem, ServerManager serverManager, IExtendedInformation extendedInformation,
             IShortInformation shortInformation)
@@ -43,6 +54,9 @@ namespace IISWorkerProcessLister.Internal
             _shortInformation = shortInformation;
         }
 
+        /// <summary>
+        /// BindingList with WorkerProcess strings.
+        /// </summary>
         public BindingList<IWorkerProcessItem> Value
         {
             get
