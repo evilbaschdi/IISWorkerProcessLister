@@ -1,33 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister.Internal
 {
+    /// <summary>
+    /// </summary>
     public class ReturnApplicationPoolSitesAndApplications : IApplicationPoolSitesAndApplications
     {
         private readonly IApplicationPoolApplications _applicationPoolApplications;
 
+        /// <summary>
+        /// </summary>
+        /// <param name="applicationPoolApplications"></param>
         public ReturnApplicationPoolSitesAndApplications(IApplicationPoolApplications applicationPoolApplications)
         {
-            if (applicationPoolApplications == null)
+            if(applicationPoolApplications == null)
             {
-                throw new ArgumentNullException("applicationPoolApplications");
+                throw new ArgumentNullException(nameof(applicationPoolApplications));
             }
             _applicationPoolApplications = applicationPoolApplications;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="sites"></param>
+        /// <param name="appPoolName"></param>
+        /// <returns></returns>
         public string Value(IEnumerable<Site> sites, string appPoolName)
         {
-            var applicationPoolApplications = "";
-
-            foreach (var site in sites)
-            {
-                //var tempString = GetApplicationPoolApplications(appPoolName, site);
-                //applicationPoolApplications += tempString.Replace(site.Name + "/,", "");
-
-                applicationPoolApplications += _applicationPoolApplications.Value(appPoolName, site);
-            }
+            var applicationPoolApplications = sites.Aggregate("", (current, site) => $"{current}{_applicationPoolApplications.Value(appPoolName, site)}");
 
             return applicationPoolApplications.Remove(applicationPoolApplications.Trim().Length - 1, 1);
         }

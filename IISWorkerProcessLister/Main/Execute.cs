@@ -1,23 +1,30 @@
-using IISWorkerProcessLister.Internal;
-using Microsoft.Web.Administration;
 using System;
 using System.Windows.Forms;
+using IISWorkerProcessLister.Internal;
+using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister.Main
 {
+    /// <summary>
+    /// </summary>
     public class Execute : IMain
     {
         private readonly MainWindow _mainWindow;
 
+        /// <summary>
+        /// </summary>
+        /// <param name="mainWindow"></param>
         public Execute(MainWindow mainWindow)
         {
-            if (mainWindow == null)
+            if(mainWindow == null)
             {
-                throw new ArgumentNullException("mainWindow");
+                throw new ArgumentNullException(nameof(mainWindow));
             }
             _mainWindow = mainWindow;
         }
 
+        /// <summary>
+        /// </summary>
         public void Run()
         {
             var applicationPoolApplications = new GetApplicationPoolApplications();
@@ -26,13 +33,10 @@ namespace IISWorkerProcessLister.Main
             var extendedInformation = new ExtendedInformation();
             var shortInformation = new ShortInformation();
             var notifyIcon = new NotifyIcon();
-            var applicationPoolSitesAndApplications =
-                new ReturnApplicationPoolSitesAndApplications(applicationPoolApplications);
-            var itemsSource = new GetWorkerProcessItemsSource(applicationPoolSitesAndApplications, workerProcessItem,
-                serverManager, extendedInformation, shortInformation);
+            var applicationPoolSitesAndApplications = new ReturnApplicationPoolSitesAndApplications(applicationPoolApplications);
+            var itemsSource = new GetWorkerProcessItemsSource(applicationPoolSitesAndApplications, workerProcessItem, serverManager, extendedInformation, shortInformation);
             _mainWindow.WorkerProcessesDataGrid.ItemsSource = itemsSource.Value;
-            var workerProcessInformation = new WorkerProcessInformation(notifyIcon,
-                extendedInformation, shortInformation);
+            var workerProcessInformation = new WorkerProcessInformation(notifyIcon, extendedInformation, shortInformation);
             workerProcessInformation.Set();
         }
     }

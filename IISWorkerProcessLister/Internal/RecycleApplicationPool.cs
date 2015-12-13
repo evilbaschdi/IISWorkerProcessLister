@@ -1,5 +1,5 @@
-﻿using Microsoft.Web.Administration;
-using System;
+﻿using System;
+using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister.Internal
 {
@@ -18,13 +18,13 @@ namespace IISWorkerProcessLister.Internal
         /// <exception cref="ArgumentNullException"></exception>
         public RecycleApplicationPool(IWorkerProcessDataGridItem workerProcessDataGridItem, ServerManager serverManager)
         {
-            if (workerProcessDataGridItem == null)
+            if(workerProcessDataGridItem == null)
             {
-                throw new ArgumentNullException("workerProcessDataGridItem");
+                throw new ArgumentNullException(nameof(workerProcessDataGridItem));
             }
-            if (serverManager == null)
+            if(serverManager == null)
             {
-                throw new ArgumentNullException("serverManager");
+                throw new ArgumentNullException(nameof(serverManager));
             }
             _workerProcessDataGridItem = workerProcessDataGridItem;
             _serverManager = serverManager;
