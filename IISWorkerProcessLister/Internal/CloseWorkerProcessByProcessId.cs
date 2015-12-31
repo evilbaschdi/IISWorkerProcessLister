@@ -4,27 +4,26 @@ using System.Diagnostics;
 namespace IISWorkerProcessLister.Internal
 {
     /// <summary>
-    ///
     /// </summary>
     public class CloseWorkerProcessByProcessId : IContextMenuEntry
     {
         private readonly IWorkerProcessDataGridItem _workerProcessDataGridItem;
 
         /// <summary>
-        /// Const5ructor of the class.
+        ///     Const5ructor of the class.
         /// </summary>
         /// <param name="workerProcessDataGridItem"></param>
         public CloseWorkerProcessByProcessId(IWorkerProcessDataGridItem workerProcessDataGridItem)
         {
-            if (workerProcessDataGridItem == null)
+            if(workerProcessDataGridItem == null)
             {
-                throw new ArgumentNullException("workerProcessDataGridItem");
+                throw new ArgumentNullException(nameof(workerProcessDataGridItem));
             }
             _workerProcessDataGridItem = workerProcessDataGridItem;
         }
 
         /// <summary>
-        /// Run.
+        ///     Run.
         /// </summary>
         public void Run()
         {
@@ -33,7 +32,7 @@ namespace IISWorkerProcessLister.Internal
             process.CloseMainWindow();
             process.WaitForExit(10000);
 
-            if (!process.HasExited)
+            if(!process.HasExited)
             {
                 process.Kill();
             }

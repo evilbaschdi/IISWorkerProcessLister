@@ -33,13 +33,10 @@ namespace IISWorkerProcessLister.Main
             var extendedInformation = new ExtendedInformation();
             var shortInformation = new ShortInformation();
             var notifyIcon = new NotifyIcon();
-            var applicationPoolSitesAndApplications =
-                new ReturnApplicationPoolSitesAndApplications(applicationPoolApplications);
-            var itemsSource = new GetWorkerProcessItemsSource(applicationPoolSitesAndApplications, workerProcessItem,
-                serverManager, extendedInformation, shortInformation);
+            var applicationPoolSitesAndApplications = new ReturnApplicationPoolSitesAndApplications(applicationPoolApplications);
+            var itemsSource = new GetWorkerProcessItemsSource(applicationPoolSitesAndApplications, workerProcessItem, serverManager, extendedInformation, shortInformation);
             _mainWindow.WorkerProcessesDataGrid.ItemsSource = itemsSource.Value;
-            var workerProcessInformation = new WorkerProcessInformation(notifyIcon,
-                extendedInformation, shortInformation);
+            var workerProcessInformation = new WorkerProcessInformation(notifyIcon, extendedInformation, shortInformation);
             workerProcessInformation.Set();
         }
     }

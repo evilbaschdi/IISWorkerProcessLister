@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister.Internal
@@ -65,30 +67,34 @@ namespace IISWorkerProcessLister.Internal
                 itemsSource.Clear();
                 _extendedInformation.Value = string.Empty;
                 _shortInformation.Value = string.Empty;
-
-                if(_serverManager.WorkerProcesses != null)
+                try
                 {
-                    foreach(var process in _serverManager.WorkerProcesses)
+                    if(_serverManager.WorkerProcesses.Any())
                     {
-                        var appPoolName = process.AppPoolName;
-                        var applicationPoolSitesAndApplications =
-                            _applicationPoolSitesAndApplications.Value(_serverManager.Sites, appPoolName);
-                        var processId = process.ProcessId;
-                        var state = process.State.ToString();
+                        foreach(var process in _serverManager.WorkerProcesses)
+                        {
+                            var appPoolName = process.AppPoolName;
+                            var applicationPoolSitesAndApplications =
+                                _applicationPoolSitesAndApplications.Value(_serverManager.Sites, appPoolName);
+                            var processId = process.ProcessId;
+                            var state = process.State.ToString();
 
-                        _workerProcessItem.ProcessId = processId;
-                        _workerProcessItem.AppPoolName = appPoolName;
-                        _workerProcessItem.Applications = applicationPoolSitesAndApplications;
-                        _workerProcessItem.State = state;
+                            _workerProcessItem.ProcessId = processId;
+                            _workerProcessItem.AppPoolName = appPoolName;
+                            _workerProcessItem.Applications = applicationPoolSitesAndApplications;
+                            _workerProcessItem.State = state;
 
-                        _extendedInformation.Value +=
-                            $"App Pool: {appPoolName} | Process ID: {processId} | State: {state}{Environment.NewLine}";
-                        _shortInformation.Value += $"{appPoolName} | {processId}{Environment.NewLine}";
+                            _extendedInformation.Value += $"App Pool: {appPoolName} | Process ID: {processId} | State: {state}{Environment.NewLine}";
+                            _shortInformation.Value += $"{appPoolName} | {processId}{Environment.NewLine}";
 
-                        itemsSource.Add(_workerProcessItem);
+                            itemsSource.Add(_workerProcessItem);
+                        }
                     }
                 }
-
+                catch(Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
                 return itemsSource;
             }
         }
