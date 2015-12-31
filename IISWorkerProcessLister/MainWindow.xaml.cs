@@ -1,12 +1,12 @@
-﻿using IISWorkerProcessLister.Core;
+﻿using System;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Threading;
+using IISWorkerProcessLister.Core;
 using IISWorkerProcessLister.Internal;
 using IISWorkerProcessLister.Main;
 using MahApps.Metro.Controls;
 using Microsoft.Web.Administration;
-using System;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Threading;
 
 namespace IISWorkerProcessLister
 {
@@ -16,13 +16,13 @@ namespace IISWorkerProcessLister
 
     // ReSharper disable RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
-    // ReSharper restore RedundantExtendsListEntry
+        // ReSharper restore RedundantExtendsListEntry
     {
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly IMain _main;
 
         /// <summary>
-        /// MainWindow
+        ///     MainWindow
         /// </summary>
         public MainWindow()
         {
@@ -39,15 +39,21 @@ namespace IISWorkerProcessLister
             _main.Run();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClosed(EventArgs e)
         {
             _dispatcherTimer.Tick -= DispatcherTimerTick;
             base.OnClosed(e);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnStateChanged(EventArgs e)
         {
-            if (WindowState == WindowState.Minimized)
+            if(WindowState == WindowState.Minimized)
             {
                 Hide();
             }

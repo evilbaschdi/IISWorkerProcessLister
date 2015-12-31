@@ -1,23 +1,30 @@
-using IISWorkerProcessLister.Internal;
-using Microsoft.Web.Administration;
 using System;
 using System.Windows.Forms;
+using IISWorkerProcessLister.Internal;
+using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister.Main
 {
+    /// <summary>
+    /// </summary>
     public class Execute : IMain
     {
         private readonly MainWindow _mainWindow;
 
+        /// <summary>
+        /// </summary>
+        /// <param name="mainWindow"></param>
         public Execute(MainWindow mainWindow)
         {
-            if (mainWindow == null)
+            if(mainWindow == null)
             {
-                throw new ArgumentNullException("mainWindow");
+                throw new ArgumentNullException(nameof(mainWindow));
             }
             _mainWindow = mainWindow;
         }
 
+        /// <summary>
+        /// </summary>
         public void Run()
         {
             var applicationPoolApplications = new GetApplicationPoolApplications();
