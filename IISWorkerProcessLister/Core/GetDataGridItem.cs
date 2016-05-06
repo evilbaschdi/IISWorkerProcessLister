@@ -2,8 +2,14 @@
 
 namespace IISWorkerProcessLister.Core
 {
+    /// <summary>
+    /// </summary>
     public class GetDataGridItem : IDataGridItem
     {
+        /// <summary>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns></returns>
         public DataGrid Item(object sender)
         {
             //Get the clicked MenuItem

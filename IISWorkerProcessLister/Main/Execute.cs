@@ -1,5 +1,4 @@
 using System;
-using System.Windows.Forms;
 using IISWorkerProcessLister.Internal;
 using Microsoft.Web.Administration;
 
@@ -16,10 +15,11 @@ namespace IISWorkerProcessLister.Main
         /// <param name="mainWindow"></param>
         public Execute(MainWindow mainWindow)
         {
-            if(mainWindow == null)
+            if (mainWindow == null)
             {
                 throw new ArgumentNullException(nameof(mainWindow));
             }
+
             _mainWindow = mainWindow;
         }
 
@@ -32,11 +32,11 @@ namespace IISWorkerProcessLister.Main
             var workerProcessItem = new GetWorkerProcessItem();
             var extendedInformation = new ExtendedInformation();
             var shortInformation = new ShortInformation();
-            var notifyIcon = new NotifyIcon();
+
             var applicationPoolSitesAndApplications = new ReturnApplicationPoolSitesAndApplications(applicationPoolApplications);
             var itemsSource = new GetWorkerProcessItemsSource(applicationPoolSitesAndApplications, workerProcessItem, serverManager, extendedInformation, shortInformation);
             _mainWindow.WorkerProcessesDataGrid.ItemsSource = itemsSource.Value;
-            var workerProcessInformation = new WorkerProcessInformation(notifyIcon, extendedInformation, shortInformation);
+            var workerProcessInformation = new WorkerProcessInformation(_mainWindow, extendedInformation, shortInformation);
             workerProcessInformation.Set();
         }
     }

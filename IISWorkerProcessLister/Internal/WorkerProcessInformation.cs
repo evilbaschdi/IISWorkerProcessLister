@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
-using IISWorkerProcessLister.Core;
 
 namespace IISWorkerProcessLister.Internal
 {
@@ -8,23 +6,22 @@ namespace IISWorkerProcessLister.Internal
     /// </summary>
     public class WorkerProcessInformation : IWorkerProcessInformation
     {
+        private readonly MainWindow _mainWindow;
         private readonly IExtendedInformation _extendedInformation;
-        private readonly NotifyIcon _notifyIcon;
         private readonly IShortInformation _shortInformation;
 
         /// <summary>
         /// </summary>
-        /// <param name="notifyIcon"></param>
+        /// <param name="mainWindow"></param>
         /// <param name="extendedInformation"></param>
         /// <param name="shortInformation"></param>
-        public WorkerProcessInformation(NotifyIcon notifyIcon, IExtendedInformation extendedInformation,
-            IShortInformation shortInformation)
+        public WorkerProcessInformation(MainWindow mainWindow, IExtendedInformation extendedInformation, IShortInformation shortInformation)
         {
-            if(notifyIcon == null)
+            if (mainWindow == null)
             {
-                throw new ArgumentNullException(nameof(notifyIcon));
+                throw new ArgumentNullException(nameof(mainWindow));
             }
-            _notifyIcon = notifyIcon;
+            _mainWindow = mainWindow;
             _extendedInformation = extendedInformation;
             _shortInformation = shortInformation;
         }
@@ -33,8 +30,7 @@ namespace IISWorkerProcessLister.Internal
         /// </summary>
         public void Set()
         {
-            _notifyIcon.BalloonTipText = _extendedInformation.Value;
-            _notifyIcon.Text = _shortInformation.Value.MaxLengthCutRight(63);
+            _mainWindow.TaskbarItemInfo.Description = _shortInformation.Value;
         }
     }
 }

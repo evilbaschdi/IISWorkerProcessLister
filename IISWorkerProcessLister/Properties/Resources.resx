@@ -124,7 +124,7 @@
     <value>IIS Worker Processes</value>
   </data>
   <data name="ApplicationSettings_NotifyIconContextMenu_Open" xml:space="preserve">
-    <value>Restor Main Application Window...</value>
+    <value>Restore Main Application Window...</value>
   </data>
   <data name="KillProcessMenuItem_Header" xml:space="preserve">
     <value>Kill Process</value>

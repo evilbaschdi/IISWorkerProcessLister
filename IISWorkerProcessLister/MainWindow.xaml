@@ -6,6 +6,26 @@
                       Height="350" ResizeMode="CanMinimize" Icon="server.ico"
                       WindowStartupLocation="CenterScreen"
                       GlowBrush="{DynamicResource AccentColorBrush}">
+    <!--  RightWindowCommands  -->
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <!--  Settings  -->
+            <Button Click="ToggleSettingsFlyoutClick" Visibility="Hidden">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="Settings" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo />
+    </Window.TaskbarItemInfo>
     <Grid>
         <DataGrid Name="WorkerProcessesDataGrid" Margin="0" AutoGenerateColumns="False"
                   GridLinesVisibility="Horizontal" CanUserAddRows="False" CanUserDeleteRows="False"
@@ -35,4 +55,48 @@
             </DataGrid.ContextMenu>
         </DataGrid>
     </Grid>
+    <!--  Flyouts  -->
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <!--  Settings Flyout  -->
+            <controls:Flyout Name="SettingsFlyout" Width="600" AnimateOnPositionChange="True" AnimateOpacity="True"
+                             Header="Settings" Position="Right" Theme="Accent">
+                <StackPanel>
+                    <!--Application Style-->
+                    <StackPanel>
+                        <!-- Theme -->
+                        <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
+                            <Label Width="60" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                   Content="Theme" />
+                            <RadioButton Name="Dark" Margin="10,5,5,0" Checked="Theme" Content="Dark" />
+                            <RadioButton Name="Light" Margin="10,5,5,0" Checked="Theme" Content="Light"
+                                         IsChecked="True" />
+                        </StackPanel>
+                        <!-- Accent -->
+                        <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
+                            <Label Width="60" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                   Content="Accent" />
+                            <ComboBox Name="Accent" Width="505" Margin="10,5,0,0" HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      SelectionChanged="AccentOnSelectionChanged" />
+                        </StackPanel>
+                        <!-- Save Style -->
+                        <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
+                            <Button Name="SaveStyle" Width="505" Margin="70,5,0,0" Click="SaveStyleClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="16" Height="16"
+                                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_save}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="save style" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
 </controls:MetroWindow>

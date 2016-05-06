@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using System.Windows.Threading;
+using EvilBaschdi.Core.Application;
+using EvilBaschdi.Core.Wpf;
 using IISWorkerProcessLister.Core;
 using IISWorkerProcessLister.Internal;
 using IISWorkerProcessLister.Main;
@@ -18,25 +21,32 @@ namespace IISWorkerProcessLister
     public partial class MainWindow : MetroWindow
         // ReSharper restore RedundantExtendsListEntry
     {
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly IMetroStyle _style;
         private readonly IMain _main;
+        private readonly int _overrideProtection;
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+
 
         /// <summary>
         ///     MainWindow
         /// </summary>
         public MainWindow()
         {
+            ISettings coreSettings = new CoreSettings();
             InitializeComponent();
+            _style = new MetroStyle(this, Accent, Dark, Light, coreSettings);
+            _style.Load(true, false);
 
             _dispatcherTimer.Tick += DispatcherTimerTick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             _dispatcherTimer.Start();
-
-            var applicationSettings = new SetApplicationSettings(this, new NotifyIcon());
+            var applicationSettings = new SetApplicationSettings(this);
             applicationSettings.Run();
 
             _main = new Execute(this);
             _main.Run();
+
+            _overrideProtection = 1;
         }
 
         /// <summary>
@@ -48,18 +58,6 @@ namespace IISWorkerProcessLister
             base.OnClosed(e);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnStateChanged(EventArgs e)
-        {
-            if(WindowState == WindowState.Minimized)
-            {
-                Hide();
-            }
-
-            base.OnStateChanged(e);
-        }
 
         private void DispatcherTimerTick(object sender, EventArgs e)
         {
@@ -94,5 +92,64 @@ namespace IISWorkerProcessLister
             workerProcess.Run();
             _main.Run();
         }
+
+        #region Flyout
+
+        private void ToggleSettingsFlyoutClick(object sender, RoutedEventArgs e)
+        {
+            ToggleFlyout(0);
+        }
+
+        private void ToggleFlyout(int index, bool stayOpen = false)
+        {
+            var activeFlyout = (Flyout) Flyouts.Items[index];
+            if (activeFlyout == null)
+            {
+                return;
+            }
+
+            foreach (
+                var nonactiveFlyout in
+                    Flyouts.Items.Cast<Flyout>()
+                           .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
+            {
+                nonactiveFlyout.IsOpen = false;
+            }
+
+            activeFlyout.IsOpen = activeFlyout.IsOpen && stayOpen || !activeFlyout.IsOpen;
+        }
+
+        #endregion Flyout
+
+        #region MetroStyle
+
+        private void SaveStyleClick(object sender, RoutedEventArgs e)
+        {
+            if (_overrideProtection == 0)
+            {
+                return;
+            }
+            _style.SaveStyle();
+        }
+
+        private void Theme(object sender, RoutedEventArgs e)
+        {
+            if (_overrideProtection == 0)
+            {
+                return;
+            }
+            _style.SetTheme(sender, e);
+        }
+
+        private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_overrideProtection == 0)
+            {
+                return;
+            }
+            _style.SetAccent(sender, e);
+        }
+
+        #endregion MetroStyle
     }
 }

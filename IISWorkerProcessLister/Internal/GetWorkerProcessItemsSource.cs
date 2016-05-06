@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using Microsoft.Web.Administration;
 
@@ -26,26 +27,26 @@ namespace IISWorkerProcessLister.Internal
         /// <param name="extendedInformation"></param>
         /// <param name="shortInformation"></param>
         public GetWorkerProcessItemsSource(IApplicationPoolSitesAndApplications applicationPoolSitesAndApplications,
-            IWorkerProcessItem workerProcessItem, ServerManager serverManager, IExtendedInformation extendedInformation,
-            IShortInformation shortInformation)
+                                           IWorkerProcessItem workerProcessItem, ServerManager serverManager, IExtendedInformation extendedInformation,
+                                           IShortInformation shortInformation)
         {
-            if(applicationPoolSitesAndApplications == null)
+            if (applicationPoolSitesAndApplications == null)
             {
                 throw new ArgumentNullException(nameof(applicationPoolSitesAndApplications));
             }
-            if(workerProcessItem == null)
+            if (workerProcessItem == null)
             {
                 throw new ArgumentNullException(nameof(workerProcessItem));
             }
-            if(serverManager == null)
+            if (serverManager == null)
             {
                 throw new ArgumentNullException(nameof(serverManager));
             }
-            if(extendedInformation == null)
+            if (extendedInformation == null)
             {
                 throw new ArgumentNullException(nameof(extendedInformation));
             }
-            if(shortInformation == null)
+            if (shortInformation == null)
             {
                 throw new ArgumentNullException(nameof(shortInformation));
             }
@@ -65,17 +66,18 @@ namespace IISWorkerProcessLister.Internal
             {
                 var itemsSource = new BindingList<IWorkerProcessItem>();
                 itemsSource.Clear();
-                _extendedInformation.Value = string.Empty;
-                _shortInformation.Value = string.Empty;
+
+                var extendedInformation = new StringBuilder();
+                var shortInformation = new StringBuilder();
+
                 try
                 {
-                    if(_serverManager.WorkerProcesses.Any())
+                    if (_serverManager.WorkerProcesses.Any())
                     {
-                        foreach(var process in _serverManager.WorkerProcesses)
+                        foreach (var process in _serverManager.WorkerProcesses)
                         {
                             var appPoolName = process.AppPoolName;
-                            var applicationPoolSitesAndApplications =
-                                _applicationPoolSitesAndApplications.Value(_serverManager.Sites, appPoolName);
+                            var applicationPoolSitesAndApplications = _applicationPoolSitesAndApplications.Value(_serverManager.Sites, appPoolName);
                             var processId = process.ProcessId;
                             var state = process.State.ToString();
 
@@ -84,14 +86,16 @@ namespace IISWorkerProcessLister.Internal
                             _workerProcessItem.Applications = applicationPoolSitesAndApplications;
                             _workerProcessItem.State = state;
 
-                            _extendedInformation.Value += $"App Pool: {appPoolName} | Process ID: {processId} | State: {state}{Environment.NewLine}";
-                            _shortInformation.Value += $"{appPoolName} | {processId}{Environment.NewLine}";
+                            extendedInformation.Append($"App Pool: {appPoolName} | Process ID: {processId} | State: {state}{Environment.NewLine}");
+                            shortInformation.Append($"{appPoolName} | {processId}{Environment.NewLine}");
 
                             itemsSource.Add(_workerProcessItem);
                         }
+                        _extendedInformation.Value = extendedInformation.ToString();
+                        _shortInformation.Value = shortInformation.ToString();
                     }
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
                     MessageBox.Show(exception.Message);
                 }
