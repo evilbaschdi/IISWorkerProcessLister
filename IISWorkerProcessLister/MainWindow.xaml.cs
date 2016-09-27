@@ -35,7 +35,7 @@ namespace IISWorkerProcessLister
             ISettings coreSettings = new CoreSettings();
             InitializeComponent();
             _style = new MetroStyle(this, Accent, Dark, Light, coreSettings);
-            _style.Load(true, false);
+            _style.Load(true);
 
             _dispatcherTimer.Tick += DispatcherTimerTick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
@@ -110,8 +110,8 @@ namespace IISWorkerProcessLister
 
             foreach (
                 var nonactiveFlyout in
-                    Flyouts.Items.Cast<Flyout>()
-                           .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
+                Flyouts.Items.Cast<Flyout>()
+                       .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
             {
                 nonactiveFlyout.IsOpen = false;
             }
