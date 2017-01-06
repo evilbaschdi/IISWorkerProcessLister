@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -32,10 +34,13 @@ namespace IISWorkerProcessLister
         /// </summary>
         public MainWindow()
         {
-            ISettings coreSettings = new CoreSettings();
             InitializeComponent();
-            _style = new MetroStyle(this, Accent, Dark, Light, coreSettings);
+            ISettings coreSettings = new CoreSettings(Properties.Settings.Default);
+            IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
+            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
             _style.Load(true);
+            var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
+            LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
 
             _dispatcherTimer.Tick += DispatcherTimerTick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
@@ -116,7 +121,14 @@ namespace IISWorkerProcessLister
                 nonactiveFlyout.IsOpen = false;
             }
 
-            activeFlyout.IsOpen = activeFlyout.IsOpen && stayOpen || !activeFlyout.IsOpen;
+            if (activeFlyout.IsOpen && stayOpen)
+            {
+                activeFlyout.IsOpen = true;
+            }
+            else
+            {
+                activeFlyout.IsOpen = !activeFlyout.IsOpen;
+            }
         }
 
         #endregion Flyout
@@ -132,13 +144,21 @@ namespace IISWorkerProcessLister
             _style.SaveStyle();
         }
 
-        private void Theme(object sender, RoutedEventArgs e)
+        private void Theme(object sender, EventArgs e)
         {
             if (_overrideProtection == 0)
             {
                 return;
             }
-            _style.SetTheme(sender, e);
+            var routedEventArgs = e as RoutedEventArgs;
+            if (routedEventArgs != null)
+            {
+                _style.SetTheme(sender, routedEventArgs);
+            }
+            else
+            {
+                _style.SetTheme(sender);
+            }
         }
 
         private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
