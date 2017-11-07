@@ -18,16 +18,8 @@ namespace IISWorkerProcessLister.Internal
         /// <exception cref="ArgumentNullException"></exception>
         public RecycleApplicationPool(IWorkerProcessDataGridItem workerProcessDataGridItem, ServerManager serverManager)
         {
-            if(workerProcessDataGridItem == null)
-            {
-                throw new ArgumentNullException(nameof(workerProcessDataGridItem));
-            }
-            if(serverManager == null)
-            {
-                throw new ArgumentNullException(nameof(serverManager));
-            }
-            _workerProcessDataGridItem = workerProcessDataGridItem;
-            _serverManager = serverManager;
+            _workerProcessDataGridItem = workerProcessDataGridItem ?? throw new ArgumentNullException(nameof(workerProcessDataGridItem));
+            _serverManager = serverManager ?? throw new ArgumentNullException(nameof(serverManager));
         }
 
         /// <summary>

@@ -17,11 +17,7 @@ namespace IISWorkerProcessLister.Internal
         /// <param name="shortInformation"></param>
         public WorkerProcessInformation(MainWindow mainWindow, IExtendedInformation extendedInformation, IShortInformation shortInformation)
         {
-            if (mainWindow == null)
-            {
-                throw new ArgumentNullException(nameof(mainWindow));
-            }
-            _mainWindow = mainWindow;
+            _mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
             _extendedInformation = extendedInformation;
             _shortInformation = shortInformation;
         }

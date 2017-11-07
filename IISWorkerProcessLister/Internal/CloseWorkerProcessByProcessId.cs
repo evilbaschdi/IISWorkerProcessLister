@@ -15,11 +15,7 @@ namespace IISWorkerProcessLister.Internal
         /// <param name="workerProcessDataGridItem"></param>
         public CloseWorkerProcessByProcessId(IWorkerProcessDataGridItem workerProcessDataGridItem)
         {
-            if(workerProcessDataGridItem == null)
-            {
-                throw new ArgumentNullException(nameof(workerProcessDataGridItem));
-            }
-            _workerProcessDataGridItem = workerProcessDataGridItem;
+            _workerProcessDataGridItem = workerProcessDataGridItem ?? throw new ArgumentNullException(nameof(workerProcessDataGridItem));
         }
 
         /// <summary>

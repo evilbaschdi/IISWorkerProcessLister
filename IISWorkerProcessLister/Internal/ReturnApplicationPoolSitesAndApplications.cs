@@ -16,11 +16,7 @@ namespace IISWorkerProcessLister.Internal
         /// <param name="applicationPoolApplications"></param>
         public ReturnApplicationPoolSitesAndApplications(IApplicationPoolApplications applicationPoolApplications)
         {
-            if(applicationPoolApplications == null)
-            {
-                throw new ArgumentNullException(nameof(applicationPoolApplications));
-            }
-            _applicationPoolApplications = applicationPoolApplications;
+            _applicationPoolApplications = applicationPoolApplications ?? throw new ArgumentNullException(nameof(applicationPoolApplications));
         }
 
         /// <summary>

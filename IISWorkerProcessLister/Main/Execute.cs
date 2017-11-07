@@ -15,12 +15,7 @@ namespace IISWorkerProcessLister.Main
         /// <param name="mainWindow"></param>
         public Execute(MainWindow mainWindow)
         {
-            if (mainWindow == null)
-            {
-                throw new ArgumentNullException(nameof(mainWindow));
-            }
-
-            _mainWindow = mainWindow;
+            _mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
         }
 
         /// <summary>

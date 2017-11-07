@@ -30,31 +30,11 @@ namespace IISWorkerProcessLister.Internal
                                            IWorkerProcessItem workerProcessItem, ServerManager serverManager, IExtendedInformation extendedInformation,
                                            IShortInformation shortInformation)
         {
-            if (applicationPoolSitesAndApplications == null)
-            {
-                throw new ArgumentNullException(nameof(applicationPoolSitesAndApplications));
-            }
-            if (workerProcessItem == null)
-            {
-                throw new ArgumentNullException(nameof(workerProcessItem));
-            }
-            if (serverManager == null)
-            {
-                throw new ArgumentNullException(nameof(serverManager));
-            }
-            if (extendedInformation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedInformation));
-            }
-            if (shortInformation == null)
-            {
-                throw new ArgumentNullException(nameof(shortInformation));
-            }
-            _applicationPoolSitesAndApplications = applicationPoolSitesAndApplications;
-            _workerProcessItem = workerProcessItem;
-            _serverManager = serverManager;
-            _extendedInformation = extendedInformation;
-            _shortInformation = shortInformation;
+            _applicationPoolSitesAndApplications = applicationPoolSitesAndApplications ?? throw new ArgumentNullException(nameof(applicationPoolSitesAndApplications));
+            _workerProcessItem = workerProcessItem ?? throw new ArgumentNullException(nameof(workerProcessItem));
+            _serverManager = serverManager ?? throw new ArgumentNullException(nameof(serverManager));
+            _extendedInformation = extendedInformation ?? throw new ArgumentNullException(nameof(extendedInformation));
+            _shortInformation = shortInformation ?? throw new ArgumentNullException(nameof(shortInformation));
         }
 
         /// <summary>

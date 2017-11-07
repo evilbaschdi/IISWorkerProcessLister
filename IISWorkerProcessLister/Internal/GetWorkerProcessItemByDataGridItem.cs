@@ -16,16 +16,8 @@ namespace IISWorkerProcessLister.Internal
         /// <param name="sender"></param>
         public GetWorkerProcessItemByDataGridItem(IDataGridItem dataGridItem, object sender)
         {
-            if(dataGridItem == null)
-            {
-                throw new ArgumentNullException(nameof(dataGridItem));
-            }
-            if(sender == null)
-            {
-                throw new ArgumentNullException(nameof(sender));
-            }
-            _dataGridItem = dataGridItem;
-            _sender = sender;
+            _dataGridItem = dataGridItem ?? throw new ArgumentNullException(nameof(dataGridItem));
+            _sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 
         /// <summary>
