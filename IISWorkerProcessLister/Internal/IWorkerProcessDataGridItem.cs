@@ -1,11 +1,11 @@
-﻿namespace IISWorkerProcessLister.Internal
+﻿using EvilBaschdi.Core;
+
+namespace IISWorkerProcessLister.Internal
 {
     /// <summary>
     /// </summary>
-    public interface IWorkerProcessDataGridItem
+    public interface IWorkerProcessDataGridItem : IValue<IWorkerProcessItem>
     {
-        /// <summary>
-        /// </summary>
-        IWorkerProcessItem Item { get; }
+   
     }
 }

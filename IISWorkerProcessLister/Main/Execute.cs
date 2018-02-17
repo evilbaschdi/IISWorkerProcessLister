@@ -31,8 +31,8 @@ namespace IISWorkerProcessLister.Main
             var applicationPoolSitesAndApplications = new ReturnApplicationPoolSitesAndApplications(applicationPoolApplications);
             var itemsSource = new GetWorkerProcessItemsSource(applicationPoolSitesAndApplications, workerProcessItem, serverManager, extendedInformation, shortInformation);
             _mainWindow.WorkerProcessesDataGrid.ItemsSource = itemsSource.Value;
-            var workerProcessInformation = new WorkerProcessInformation(_mainWindow, extendedInformation, shortInformation);
-            workerProcessInformation.Set();
+            var workerProcessInformation = new WorkerProcessInformation(_mainWindow, shortInformation);
+            workerProcessInformation.Run();
         }
     }
 }

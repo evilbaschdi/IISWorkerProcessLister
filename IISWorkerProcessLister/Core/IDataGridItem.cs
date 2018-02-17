@@ -1,15 +1,11 @@
 using System.Windows.Controls;
+using EvilBaschdi.Core;
 
 namespace IISWorkerProcessLister.Core
 {
     /// <summary>
     /// </summary>
-    public interface IDataGridItem
-    {
-        /// <summary>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <returns></returns>
-        DataGrid Item(object sender);
+    public interface IDataGridItem : IValueFor<object, DataGrid>{
+       
     }
 }

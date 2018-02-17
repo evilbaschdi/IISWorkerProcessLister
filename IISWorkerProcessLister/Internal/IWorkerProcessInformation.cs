@@ -1,11 +1,11 @@
-﻿namespace IISWorkerProcessLister.Internal
+﻿using EvilBaschdi.Core;
+
+namespace IISWorkerProcessLister.Internal
 {
     /// <summary>
     /// </summary>
-    public interface IWorkerProcessInformation
+    public interface IWorkerProcessInformation : IRun
     {
-        /// <summary>
-        /// </summary>
-        void Set();
+      
     }
 }

@@ -23,12 +23,12 @@ namespace IISWorkerProcessLister.Internal
         /// </summary>
         public void Run()
         {
-            var process = Process.GetProcessById(_workerProcessDataGridItem.Item.ProcessId);
+            var process = Process.GetProcessById(_workerProcessDataGridItem.Value.ProcessId);
 
             process.CloseMainWindow();
             process.WaitForExit(10000);
 
-            if(!process.HasExited)
+            if (!process.HasExited)
             {
                 process.Kill();
             }

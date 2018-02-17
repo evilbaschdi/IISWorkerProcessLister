@@ -24,6 +24,6 @@ namespace IISWorkerProcessLister.Internal
         /// </summary>
         //Get the underlying item, that you cast to your object that is bound
         //to the DataGrid (and has subject and state as property)
-        public IWorkerProcessItem Item => (IWorkerProcessItem) _dataGridItem.Item(_sender).SelectedCells[0].Item;
+        public IWorkerProcessItem Value => (IWorkerProcessItem) _dataGridItem.ValueFor(_sender).SelectedCells[0].Item;
     }
 }

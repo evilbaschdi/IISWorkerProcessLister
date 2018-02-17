@@ -10,7 +10,7 @@ namespace IISWorkerProcessLister.Core
         /// </summary>
         /// <param name="sender"></param>
         /// <returns></returns>
-        public DataGrid Item(object sender)
+        public DataGrid ValueFor(object sender)
         {
             //Get the clicked MenuItem
             var menuItem = (MenuItem) sender;

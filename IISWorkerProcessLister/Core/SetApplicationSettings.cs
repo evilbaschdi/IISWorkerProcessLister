@@ -12,7 +12,6 @@ namespace IISWorkerProcessLister.Core
         /// <summary>
         /// </summary>
         /// <param name="mainWindow"></param>
-        /// <param name="ni"></param>
         public SetApplicationSettings(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;

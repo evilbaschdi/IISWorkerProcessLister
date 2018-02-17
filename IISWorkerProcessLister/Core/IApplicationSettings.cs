@@ -1,11 +1,10 @@
+using EvilBaschdi.Core;
+
 namespace IISWorkerProcessLister.Core
 {
     /// <summary>
     /// </summary>
-    public interface IApplicationSettings
+    public interface IApplicationSettings : IRun
     {
-        /// <summary>
-        /// </summary>
-        void Run();
     }
 }

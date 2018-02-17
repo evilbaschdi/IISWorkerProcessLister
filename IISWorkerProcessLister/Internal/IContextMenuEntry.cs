@@ -1,13 +1,11 @@
-﻿namespace IISWorkerProcessLister.Internal
+﻿using EvilBaschdi.Core;
+
+namespace IISWorkerProcessLister.Internal
 {
     /// <summary>
-    /// Interface for setting ContexMenuEntry events in the main applicatin.
+    ///     Interface for setting ContexMenuEntry events in the main application.
     /// </summary>
-    public interface IContextMenuEntry
+    public interface IContextMenuEntry : IRun
     {
-        /// <summary>
-        /// Run.
-        /// </summary>
-        void Run();
     }
 }

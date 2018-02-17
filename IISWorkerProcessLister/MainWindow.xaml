@@ -2,7 +2,8 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      Width="1024"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      Width="1024" TitleCharacterCasing="Normal"
                       Height="350" ResizeMode="CanMinimize" Icon="server.ico"
                       WindowStartupLocation="CenterScreen"
                       GlowBrush="{DynamicResource AccentColorBrush}">
@@ -12,13 +13,8 @@
             <!--  Settings  -->
             <Button Click="ToggleSettingsFlyoutClick">
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20"
-                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="Settings" />
+                    <iconPacks:PackIconMaterial Kind="Settings" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="settings" />
                 </StackPanel>
             </Button>
         </controls:WindowCommands>
@@ -27,7 +23,7 @@
         <TaskbarItemInfo />
     </Window.TaskbarItemInfo>
     <Grid>
-        <DataGrid Name="WorkerProcessesDataGrid" Margin="0" AutoGenerateColumns="False"
+        <DataGrid Name="WorkerProcessesDataGrid" Margin="10,10,10,10" AutoGenerateColumns="False"
                   GridLinesVisibility="Horizontal" CanUserAddRows="False" CanUserDeleteRows="False"
                   SelectionUnit="FullRow">
             <DataGrid.Columns>
@@ -78,11 +74,7 @@
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
                         <Button Name="SaveStyle" Width="165" Margin="60,5,0,0" Click="SaveStyleClick">
                             <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="16" Height="16" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_save}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
+                                <iconPacks:PackIconMaterial Kind="ContentSaveSettings" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="save style" />
                             </StackPanel>
                         </Button>

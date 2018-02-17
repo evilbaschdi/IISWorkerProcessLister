@@ -27,7 +27,7 @@ namespace IISWorkerProcessLister.Internal
         /// </summary>
         public void Run()
         {
-            _serverManager.ApplicationPools[_workerProcessDataGridItem.Item.AppPoolName].Recycle();
+            _serverManager.ApplicationPools[_workerProcessDataGridItem.Value.AppPoolName].Recycle();
         }
     }
 }
