@@ -25,7 +25,7 @@
     <Grid>
         <DataGrid Name="WorkerProcessesDataGrid" Margin="10,10,10,10" AutoGenerateColumns="False"
                   GridLinesVisibility="Horizontal" CanUserAddRows="False" CanUserDeleteRows="False"
-                  SelectionUnit="FullRow">
+                  SelectionUnit="FullRow" Style="{DynamicResource AzureDataGrid}">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="Application Pool Name" Binding="{Binding Value}" IsReadOnly="True" Width="*" />
                 <DataGridTextColumn Header="Process Id" Binding="{Binding Key}" IsReadOnly="True" Width="*" />-->
