@@ -6,7 +6,9 @@
     {
         /// <summary>
         /// </summary>
-        int ProcessId { get; set; }
+        //public string Uri { get; set; }
+        //public string Port { get; set; }
+        string Applications { get; set; }
 
         /// <summary>
         /// </summary>
@@ -14,7 +16,7 @@
 
         /// <summary>
         /// </summary>
-        string State { get; set; }
+        int ProcessId { get; set; }
 
         /// <summary>
         /// </summary>
@@ -22,8 +24,6 @@
 
         /// <summary>
         /// </summary>
-        //public string Uri { get; set; }
-        //public string Port { get; set; }
-        string Applications { get; set; }
+        string State { get; set; }
     }
 }

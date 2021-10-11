@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
-using EvilBaschdi.CoreExtended.Metro;
-using EvilBaschdi.CoreExtended.Mvvm;
-using EvilBaschdi.CoreExtended.Mvvm.View;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
+using EvilBaschdi.CoreExtended;
+using EvilBaschdi.CoreExtended.Controls.About;
 using IISWorkerProcessLister.Core;
 using IISWorkerProcessLister.Internal;
 using IISWorkerProcessLister.Main;
@@ -21,21 +19,23 @@ namespace IISWorkerProcessLister
     public partial class MainWindow : MetroWindow
         // ReSharper restore RedundantExtendsListEntry
     {
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly DispatcherTimer _dispatcherTimer = new();
         private readonly IMain _main;
-        private readonly IThemeManagerHelper _themeManagerHelper;
+        private readonly IRoundCorners _roundCorners;
+
 
         /// <inheritdoc />
         public MainWindow()
         {
             InitializeComponent();
-            _themeManagerHelper = new ThemeManagerHelper();
-            IApplicationStyle applicationStyle = new ApplicationStyle(_themeManagerHelper);
-            applicationStyle.Load(true);
+
+            _roundCorners = new RoundCorners();
+            IApplicationStyle style = new ApplicationStyle(_roundCorners, true);
+            style.Run();
 
 
             _dispatcherTimer.Tick += DispatcherTimerTick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
+            _dispatcherTimer.Interval = new(0, 0, 10);
             _dispatcherTimer.Start();
             var applicationSettings = new SetApplicationSettings(this);
             applicationSettings.Run();
@@ -91,11 +91,11 @@ namespace IISWorkerProcessLister
         private void AboutWindowClick(object sender, RoutedEventArgs e)
         {
             var assembly = typeof(MainWindow).Assembly;
-            IAboutWindowContent aboutWindowContent = new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\server.png");
+            IAboutContent aboutWindowContent = new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\server.png");
 
             var aboutWindow = new AboutWindow
                               {
-                                  DataContext = new AboutViewModel(aboutWindowContent, _themeManagerHelper)
+                                  DataContext = new AboutViewModel(aboutWindowContent, _roundCorners)
                               };
 
             aboutWindow.ShowDialog();

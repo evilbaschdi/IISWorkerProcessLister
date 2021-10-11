@@ -16,9 +16,9 @@ namespace IISWorkerProcessLister.Internal
         {
             return
                 site.Applications.Where(
-                    application =>
-                        !string.IsNullOrWhiteSpace(appPoolName) && !string.IsNullOrWhiteSpace(application.ApplicationPoolName) &&
-                        (application.ApplicationPoolName.Trim() == appPoolName.Trim()))
+                        application =>
+                            !string.IsNullOrWhiteSpace(appPoolName) && !string.IsNullOrWhiteSpace(application.ApplicationPoolName) &&
+                            application.ApplicationPoolName.Trim() == appPoolName.Trim())
                     .Aggregate("", (current, application) => current + $"{site.Name}{application.Path}, ");
         }
     }

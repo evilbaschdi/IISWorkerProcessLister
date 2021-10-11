@@ -71,6 +71,7 @@ namespace IISWorkerProcessLister.Internal
 
                             itemsSource.Add(_workerProcessItem);
                         }
+
                         _extendedInformation.Value = extendedInformation.ToString();
                         _shortInformation.Value = shortInformation.ToString();
                     }
@@ -79,6 +80,7 @@ namespace IISWorkerProcessLister.Internal
                 {
                     MessageBox.Show(exception.Message);
                 }
+
                 return itemsSource;
             }
         }

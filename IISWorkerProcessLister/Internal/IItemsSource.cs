@@ -7,6 +7,5 @@ namespace IISWorkerProcessLister.Internal
     /// </summary>
     public interface IItemsSource : IValue<BindingList<IWorkerProcessItem>>
     {
-       
     }
 }

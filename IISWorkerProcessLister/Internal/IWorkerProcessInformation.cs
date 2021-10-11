@@ -6,6 +6,5 @@ namespace IISWorkerProcessLister.Internal
     /// </summary>
     public interface IWorkerProcessInformation : IRun
     {
-      
     }
 }

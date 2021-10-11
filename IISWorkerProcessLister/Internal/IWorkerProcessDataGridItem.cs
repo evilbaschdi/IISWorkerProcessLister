@@ -6,6 +6,5 @@ namespace IISWorkerProcessLister.Internal
     /// </summary>
     public interface IWorkerProcessDataGridItem : IValue<IWorkerProcessItem>
     {
-   
     }
 }

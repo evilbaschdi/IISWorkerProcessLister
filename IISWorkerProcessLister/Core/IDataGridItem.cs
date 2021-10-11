@@ -5,7 +5,7 @@ namespace IISWorkerProcessLister.Core
 {
     /// <summary>
     /// </summary>
-    public interface IDataGridItem : IValueFor<object, DataGrid>{
-       
+    public interface IDataGridItem : IValueFor<object, DataGrid>
+    {
     }
 }
