@@ -1,10 +1,9 @@
 ﻿using EvilBaschdi.Core;
 
-namespace IISWorkerProcessLister.Internal
+namespace IISWorkerProcessLister.Internal;
+
+/// <summary>
+/// </summary>
+public interface IWorkerProcessInformation : IRun
 {
-    /// <summary>
-    /// </summary>
-    public interface IWorkerProcessInformation : IRun
-    {
-    }
 }

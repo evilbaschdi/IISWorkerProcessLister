@@ -1,16 +1,10 @@
-﻿using Microsoft.Web.Administration;
+﻿using EvilBaschdi.Core;
+using Microsoft.Web.Administration;
 
-namespace IISWorkerProcessLister.Internal
+namespace IISWorkerProcessLister.Internal;
+
+/// <summary>
+/// </summary>
+public interface IApplicationPoolApplications : IValueFor2<string, Site, string>
 {
-    /// <summary>
-    /// </summary>
-    public interface IApplicationPoolApplications
-    {
-        /// <summary>
-        /// </summary>
-        /// <param name="appPoolName"></param>
-        /// <param name="site"></param>
-        /// <returns></returns>
-        string Value(string appPoolName, Site site);
-    }
 }

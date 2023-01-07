@@ -5,8 +5,7 @@
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       Width="1024" TitleCharacterCasing="Normal"
                       Height="350" ResizeMode="CanMinimize" Icon="server.ico"
-                      WindowStartupLocation="CenterScreen"
-                      GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}">
+                      WindowStartupLocation="CenterScreen" Title="IIS Worker Processes">
     <!--  RightWindowCommands  -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
@@ -43,9 +42,11 @@
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu Name="StoryMenu" StaysOpen="True">
-                    <MenuItem Name="RecycleAppPoolMenuItem" Click="RecycleAppPoolClick" />
-                    <MenuItem Name="StopAppPoolMenuItem" Click="StopAppPoolMenuItem_OnClickAppPoolClick" />
-                    <MenuItem Name="KillProcessMenuItem" Click="KillProcessClick" />
+                    <!-- ReSharper disable Xaml.RedundantResource -->
+                    <MenuItem Name="RecycleAppPoolMenuItem" Click="RecycleAppPoolClick" Header="Recycle Application Pool" />
+                    <MenuItem Name="StopAppPoolMenuItem" Click="StopAppPoolMenuItem_OnClickAppPoolClick" Header="Stop Application Pool" />
+                    <MenuItem Name="KillProcessMenuItem" Click="KillProcessClick" Header="Kill Process" />
+                    <!-- ReSharper restore Xaml.RedundantResource -->
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

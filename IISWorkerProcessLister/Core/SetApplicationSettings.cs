@@ -1,36 +1,32 @@
 using System.Windows;
 using IISWorkerProcessLister.Properties;
 
-namespace IISWorkerProcessLister.Core
+namespace IISWorkerProcessLister.Core;
+
+/// <summary>
+/// </summary>
+public class SetApplicationSettings : IApplicationSettings
 {
+    private readonly MainWindow _mainWindow;
+
     /// <summary>
     /// </summary>
-    public class SetApplicationSettings : IApplicationSettings
+    /// <param name="mainWindow"></param>
+    public SetApplicationSettings(MainWindow mainWindow)
     {
-        private readonly MainWindow _mainWindow;
+        _mainWindow = mainWindow;
+    }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="mainWindow"></param>
-        public SetApplicationSettings(MainWindow mainWindow)
-        {
-            _mainWindow = mainWindow;
-        }
+    /// <summary>
+    /// </summary>
+    public void Run()
+    {
+        _mainWindow.SetCurrentValue(Window.TitleProperty, Resources.MainWindow_Title);
+        StartMinimized();
+    }
 
-        /// <summary>
-        /// </summary>
-        public void Run()
-        {
-            _mainWindow.Title = Resources.MainWindow_Title;
-            _mainWindow.RecycleAppPoolMenuItem.Header = Resources.RecycleAppPoolMenuItem_Header;
-            _mainWindow.KillProcessMenuItem.Header = Resources.KillProcessMenuItem_Header;
-            _mainWindow.StopAppPoolMenuItem.Header = Resources.StopAppPoolMenuItem_Header;
-            StartMinimized();
-        }
-
-        private void StartMinimized()
-        {
-            _mainWindow.WindowState = WindowState.Minimized;
-        }
+    private void StartMinimized()
+    {
+        _mainWindow.SetCurrentValue(Window.WindowStateProperty, WindowState.Minimized);
     }
 }

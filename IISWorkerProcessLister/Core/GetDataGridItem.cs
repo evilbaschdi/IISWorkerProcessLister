@@ -1,26 +1,25 @@
 ﻿using System.Windows.Controls;
 
-namespace IISWorkerProcessLister.Core
+namespace IISWorkerProcessLister.Core;
+
+/// <summary>
+/// </summary>
+public class GetDataGridItem : IDataGridItem
 {
     /// <summary>
     /// </summary>
-    public class GetDataGridItem : IDataGridItem
+    /// <param name="sender"></param>
+    /// <returns></returns>
+    public DataGrid ValueFor(object sender)
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <returns></returns>
-        public DataGrid ValueFor(object sender)
-        {
-            //Get the clicked MenuItem
-            var menuItem = (MenuItem) sender;
+        //Get the clicked MenuItem
+        var menuItem = (MenuItem)sender;
 
-            //Get the ContextMenu to which the menuItem belongs
-            var contextMenu = (ContextMenu) menuItem.Parent;
+        //Get the ContextMenu to which the menuItem belongs
+        var contextMenu = (ContextMenu)menuItem.Parent;
 
-            //Find the placementTarget
-            var item = (DataGrid) contextMenu.PlacementTarget;
-            return item;
-        }
+        //Find the placementTarget
+        var item = (DataGrid)contextMenu.PlacementTarget;
+        return item;
     }
 }

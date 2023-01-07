@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IISWorkerProcessLister", "IISWorkerProcessLister\IISWorkerProcessLister.csproj", "{EDECAB03-E309-4F61-A2B2-0503786E7EC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IISWorkerProcessLister", "IISWorkerProcessLister\IISWorkerProcessLister.csproj", "{EDECAB03-E309-4F61-A2B2-0503786E7EC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1BF2FDD0-52C7-4ADD-99C7-395E3234634F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		global.json = global.json
+		NuGet.config = NuGet.config
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +26,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BB00871-5C1D-41BE-BC9B-AC1B06288905}
 	EndGlobalSection
 EndGlobal

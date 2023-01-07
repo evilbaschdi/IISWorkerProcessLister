@@ -1,11 +1,9 @@
-﻿namespace IISWorkerProcessLister.Internal
+﻿using EvilBaschdi.Core;
+
+namespace IISWorkerProcessLister.Internal;
+
+/// <summary>
+/// </summary>
+public interface IExtendedInformation : IWritableValue<string>
 {
-    /// <summary>
-    /// </summary>
-    public interface IExtendedInformation
-    {
-        /// <summary>
-        /// </summary>
-        string Value { get; set; }
-    }
 }
