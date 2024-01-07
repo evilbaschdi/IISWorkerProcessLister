@@ -13,13 +13,9 @@ using Microsoft.Web.Administration;
 
 namespace IISWorkerProcessLister;
 
-/// <summary>
-///     Interaction logic for MainWindow.xaml
-/// </summary>
-
 // ReSharper disable RedundantExtendsListEntry
 public partial class MainWindow : MetroWindow
-    // ReSharper restore RedundantExtendsListEntry
+// ReSharper restore RedundantExtendsListEntry
 {
     private readonly DispatcherTimer _dispatcherTimer = new();
     private readonly IMain _main;
